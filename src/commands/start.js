@@ -1,20 +1,38 @@
 import { stats } from "../config";
+import fs from "fs";
+
+let postData;
+fs.readFile("./data.json", "utf8", (err, data) => {
+  if (err) {
+    console.log("Error", err);
+  }
+  postData = JSON.parse(data);
+});
 
 const start = async ({ ctx, logger }) => {
+  const { startPayload } = ctx;
+
+  if (startPayload.startsWith("post_")) {
+    const postId = startPayload.replace("post_", "");
+    const postArray = postData[postId];
+    for (let i = 0; i < postArray.length; i++) {
+      const msgId = postArray[i];
+      await forwardMessage({ ctx, msgId, logger });
+    }
+  } else {
+    await forwardMessage({ ctx, msgId: startPayload, logger });
+  }
+};
+
+const forwardMessage = async ({ ctx, msgId, logger }) => {
   const {
-    startPayload,
     from: { id: userId },
   } = ctx;
-
   try {
     stats.updateStats(userId);
-    await ctx.telegram.forwardMessage(
-      userId,
-      process.env.CHANNEL_ID,
-      startPayload
-    );
+    await ctx.telegram.forwardMessage(userId, process.env.CHANNEL_ID, msgId);
   } catch (error) {
-    await ctx.telegram.sendMessage(userId, "File not found :(");
+    await ctx.telegram.sendMessage(userId, `File No. ${msgId} not found :(`);
     logger("Error", error);
   }
 };
