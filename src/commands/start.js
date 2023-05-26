@@ -32,7 +32,9 @@ const forwardMessage = async ({ ctx, msgId, logger }) => {
     stats.updateStats(userId);
     await ctx.telegram.forwardMessage(userId, process.env.CHANNEL_ID, msgId);
   } catch (error) {
-    await ctx.telegram.sendMessage(userId, `File No. ${msgId} not found :(`);
+    if (error.code !== 403) {
+      await ctx.telegram.sendMessage(userId, `File No. ${msgId} not found :(`);
+    }
     logger("Error", error);
   }
 };
