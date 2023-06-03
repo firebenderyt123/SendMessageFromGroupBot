@@ -14,10 +14,18 @@ const start = async ({ ctx, logger }) => {
 
   if (startPayload.startsWith("post_")) {
     const postId = startPayload.replace("post_", "");
-    const postArray = postData[postId];
-    for (let i = 0; i < postArray.length; i++) {
-      const msgId = postArray[i];
-      await forwardMessage({ ctx, msgId, logger });
+    const postArray = postData[postId] || [];
+    if (postArray.length === 0) {
+      await sendMessage({
+        ctx,
+        message: `Post with No. ${postId} not found :(`,
+        logger,
+      });
+    } else {
+      for (let i = 0; i < postArray.length; i++) {
+        const msgId = postArray[i];
+        await forwardMessage({ ctx, msgId, logger });
+      }
     }
   } else {
     await forwardMessage({ ctx, msgId: startPayload, logger });
@@ -35,6 +43,17 @@ const forwardMessage = async ({ ctx, msgId, logger }) => {
     if (error.code !== 403) {
       await ctx.telegram.sendMessage(userId, `File No. ${msgId} not found :(`);
     }
+    logger("Error", error);
+  }
+};
+
+const sendMessage = async ({ ctx, message, logger }) => {
+  const {
+    from: { id: userId },
+  } = ctx;
+  try {
+    await ctx.telegram.sendMessage(userId, message);
+  } catch (error) {
     logger("Error", error);
   }
 };
