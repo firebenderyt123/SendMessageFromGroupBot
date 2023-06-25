@@ -2,7 +2,7 @@ import { Telegraf } from "telegraf";
 import LocalSession from "telegraf-session-local";
 
 import { logger } from "./logger";
-import { start, stats } from "./commands";
+import { start } from "./commands";
 
 import dotenv from "dotenv";
 import path from "path";
@@ -20,7 +20,7 @@ const bot = new Telegraf(botToken);
 bot.use(new LocalSession({ database: "./session.json" }).middleware());
 
 bot.start(async (ctx) => await start({ ctx, logger }));
-bot.command("stats", async (ctx) => await stats({ ctx, logger }));
+// bot.command("stats", async (ctx) => await stats({ ctx, logger }));
 
 // bot started info
 bot.telegram.getMe().then((botInfo) => {

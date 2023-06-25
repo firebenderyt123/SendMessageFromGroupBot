@@ -1,15 +1,17 @@
-import { stats } from "../config";
+// import { stats } from "../config";
 import fs from "fs";
+import path from "path";
 
-let postData;
-fs.readFile("./data.json", "utf8", (err, data) => {
+let postData: any;
+const dataFilePath = path.join(__dirname, "../../data.json");
+fs.readFile(dataFilePath, "utf8", (err: any, data: any) => {
   if (err) {
     console.log("Error", err);
   }
   postData = JSON.parse(data);
 });
 
-const start = async ({ ctx, logger }) => {
+const start = async ({ ctx, logger }: any) => {
   const { startPayload } = ctx;
 
   if (startPayload.startsWith("post_")) {
@@ -32,14 +34,14 @@ const start = async ({ ctx, logger }) => {
   }
 };
 
-const forwardMessage = async ({ ctx, msgId, logger }) => {
+const forwardMessage = async ({ ctx, msgId, logger }: any) => {
   const {
     from: { id: userId },
   } = ctx;
   try {
-    stats.updateStats(userId);
+    // stats.updateStats(userId);
     await ctx.telegram.forwardMessage(userId, process.env.CHANNEL_ID, msgId);
-  } catch (error) {
+  } catch (error: any) {
     if (error.code !== 403) {
       await ctx.telegram.sendMessage(userId, `File No. ${msgId} not found :(`);
     }
@@ -47,7 +49,7 @@ const forwardMessage = async ({ ctx, msgId, logger }) => {
   }
 };
 
-const sendMessage = async ({ ctx, message, logger }) => {
+const sendMessage = async ({ ctx, message, logger }: any) => {
   const {
     from: { id: userId },
   } = ctx;
