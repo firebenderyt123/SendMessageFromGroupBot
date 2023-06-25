@@ -1,5 +1,5 @@
 interface FILE {
-  id: number;
+  id: string;
   userId: number;
   sendedAt: Date;
 }

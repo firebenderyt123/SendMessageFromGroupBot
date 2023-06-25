@@ -42,10 +42,9 @@ router.get(
 router.post(
   "/",
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { name, content } = req.body;
     try {
-      // const mail = await mailingService.createMail({ name, content });
-      // res.locals.data = mail;
+      const mail = await mailingService.createMail(req.body);
+      res.locals.data = mail;
     } catch (err) {
       next(err);
     } finally {

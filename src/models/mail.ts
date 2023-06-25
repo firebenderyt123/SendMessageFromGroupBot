@@ -1,6 +1,7 @@
 interface MAIL {
-  id: number;
+  id: string;
   name: string;
+  image?: string;
   content: string;
   createdAt: Date;
   updatedAt: Date;
@@ -9,4 +10,12 @@ interface MAIL {
   isPaused: boolean;
 }
 
+type createMailData = {
+  name: string;
+  image?: string;
+  content: string;
+  needToSend: number;
+};
+
 export default MAIL;
+export { createMailData };

@@ -1,5 +1,5 @@
 interface USER {
-  id: number;
+  id: string;
   tgId: number;
   firstName: string;
   lastName?: string;

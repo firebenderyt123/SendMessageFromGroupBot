@@ -1,12 +1,25 @@
 import { mailingRepository } from "../repositories/mailingRepository";
 import CustomError from "../classes/customError";
+import { createMailData } from "../models/mail";
 
 class MailingService {
-  // createMail(data) {}
+  async createMail(data: createMailData) {
+    const { name, image, content, needToSend } = data;
+    const createdMail = await mailingRepository.create({
+      name,
+      image,
+      content,
+      needToSend,
+    });
+    if (!createdMail) {
+      throw new CustomError("Mail not created", 400);
+    }
+    return createdMail;
+  }
 
-  // updateMail(id, data) {}
+  // async updateMail(id, data) {}
 
-  // deleteMail(id) {}
+  // async deleteMail(id) {}
 
   async searchAll() {
     const allMails = await mailingRepository.getAll();
