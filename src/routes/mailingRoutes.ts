@@ -4,6 +4,7 @@ import {
   responseMiddleware,
   errorMiddleware,
 } from "../middlewares/response.middleware";
+import { createMailValid } from "../middlewares/mailing.validation.middleware";
 
 const router: Router = Router();
 
@@ -41,6 +42,7 @@ router.get(
 
 router.post(
   "/",
+  createMailValid,
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const mail = await mailingService.createMail(req.body);

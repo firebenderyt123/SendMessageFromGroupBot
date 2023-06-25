@@ -1,19 +1,21 @@
 import { mailingRepository } from "../repositories/mailingRepository";
 import CustomError from "../classes/customError";
-import { createMailData } from "../models/mail";
+import MAIL, { CreateMailData } from "../models/mail";
 
 class MailingService {
-  async createMail(data: createMailData) {
-    const { name, image, content, needToSend } = data;
+  async createMail(data: CreateMailData): Promise<MAIL> {
+    const { name, image, content, needToSend = -1 } = data;
+    const mail = await mailingRepository.getOne({ name });
+    if (mail) throw new CustomError("Mail with same name is exists", 400);
+
     const createdMail = await mailingRepository.create({
       name,
       image,
       content,
       needToSend,
     });
-    if (!createdMail) {
-      throw new CustomError("Mail not created", 400);
-    }
+    if (!createdMail) throw new CustomError("Mail not created", 400);
+
     return createdMail;
   }
 
@@ -21,12 +23,12 @@ class MailingService {
 
   // async deleteMail(id) {}
 
-  async searchAll() {
+  async searchAll(): Promise<MAIL[]> {
     const allMails = await mailingRepository.getAll();
     return allMails;
   }
 
-  async search(data: any) {
+  async search(data: any): Promise<MAIL> {
     const mail = await mailingRepository.getOne(data);
     if (!mail) {
       throw new CustomError("Mail not found", 400);

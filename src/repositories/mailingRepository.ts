@@ -1,14 +1,13 @@
 import { BaseRepository } from "./baseRepository";
-import MAIL, { createMailData } from "../models/mail";
+import MAIL, { CreateMailData } from "../models/mail";
 
 class MailingRepository extends BaseRepository {
   constructor() {
     super("mails");
   }
 
-  async create(data: createMailData): Promise<any> {
+  async create(data: CreateMailData): Promise<any> {
     try {
-      console.log(data, `/${this.collectionName}`);
       const collectionData = await this.dbContext.getData(
         `/${this.collectionName}`
       );

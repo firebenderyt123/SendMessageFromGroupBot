@@ -16,7 +16,6 @@ class BaseRepository {
 
   async getAll(): Promise<any[]> {
     try {
-      console.log(await this.dbContext.getData(`/${this.collectionName}`));
       return await this.dbContext.getData(`/${this.collectionName}`);
     } catch (error) {
       return [];
