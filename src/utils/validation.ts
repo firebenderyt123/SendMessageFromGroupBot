@@ -5,5 +5,5 @@ export const getMissingFields = (
   return Object.entries(model)
     .filter(([_, prop]) => prop.required)
     .map(([propName, _]) => propName)
-    .filter((field) => !req.body[field] && req.body[field] !== 0);
+    .filter((field) => req.body[field] === undefined);
 };

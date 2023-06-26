@@ -17,6 +17,13 @@ type CreateMailData = {
   needToSend: number;
 };
 
+type UpdateMailData = {
+  name?: string;
+  image?: string;
+  content?: string;
+  needToSend?: number;
+};
+
 const MailValid = {
   name: {
     required: true,
@@ -77,4 +84,4 @@ const MailValid = {
 };
 
 export default MAIL;
-export { CreateMailData, MailValid };
+export { CreateMailData, UpdateMailData, MailValid };
