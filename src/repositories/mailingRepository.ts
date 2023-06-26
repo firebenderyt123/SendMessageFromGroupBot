@@ -7,17 +7,21 @@ class MailingRepository extends BaseRepository {
   }
 
   async create(data: CreateMailData): Promise<any> {
+    const { name, image, content, needToSend } = data;
     try {
       const collectionData = await this.dbContext.getData(
         `/${this.collectionName}`
       );
       const mailData: MAIL = {
-        ...data,
         id: this.generateId(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        name,
+        image,
+        content,
+        needToSend,
         totalSended: 0,
         isPaused: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
 
       collectionData.push(mailData);

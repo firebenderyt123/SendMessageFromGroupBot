@@ -1,9 +1,9 @@
 import { mailingRepository } from "../repositories/mailingRepository";
 import CustomError from "../classes/customError";
-import MAIL, { CreateMailData } from "../models/mail";
+import MAIL from "../models/mail";
 
 class MailingService {
-  async createMail(data: CreateMailData): Promise<MAIL> {
+  async createMail(data: any): Promise<MAIL> {
     const { name, image, content, needToSend = -1 } = data;
     const mail = await mailingRepository.getOne({ name });
     if (mail) throw new CustomError("Mail with same name is exists", 400);
