@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 initRoutes(app);
 
-const port = 3000;
+const port = 8000;
 app.listen(port, () => {
   console.log(`Server started at: http://localhost:${port}`);
 });
