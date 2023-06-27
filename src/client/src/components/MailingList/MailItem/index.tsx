@@ -1,7 +1,7 @@
 import React from "react";
 
 function MailItem() {
-  return <></>;
+  return <li></li>;
 }
 
 export default MailItem;
