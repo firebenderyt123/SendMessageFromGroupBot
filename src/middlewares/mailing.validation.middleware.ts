@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { CreateMailData, MailValid } from "../models/mail";
+import { MailValid } from "../models/mail";
 import { getMissingFields } from "../utils/validation";
 
 const createMailValid = (req: Request, res: Response, next: NextFunction) => {
-  const { name, image, content, needToSend = -1 } = req.body;
+  const { name, image, content, sendAt, needToSend = -1 } = req.body;
 
   const missingFields = getMissingFields(req, MailValid);
 
@@ -29,6 +29,11 @@ const createMailValid = (req: Request, res: Response, next: NextFunction) => {
     return res.status(400).json({ error: true, message: contentValidation });
   }
 
+  const sendAtValidation = MailValid.sendAt.validate(sendAt);
+  if (sendAtValidation !== true) {
+    return res.status(400).json({ error: true, message: sendAtValidation });
+  }
+
   const needToSendValidation = MailValid.needToSend.validate(needToSend);
   if (needToSendValidation !== true) {
     return res.status(400).json({ error: true, message: needToSendValidation });
@@ -44,9 +49,18 @@ const createMailValid = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const updateMailValid = (req: Request, res: Response, next: NextFunction) => {
-  const { name, image, content, needToSend } = req.body;
+  const { name, image, content, sendAt, needToSend, totalSended, isPaused } =
+    req.body;
 
-  if (!name && !image && !content && !needToSend) {
+  if (
+    !name &&
+    !image &&
+    !content &&
+    !sendAt &&
+    !needToSend &&
+    !totalSended &&
+    !isPaused
+  ) {
     return res.status(400).json({ error: true, message: "No fields found" });
   }
 
@@ -63,6 +77,11 @@ const updateMailValid = (req: Request, res: Response, next: NextFunction) => {
   const contentValidation = !content || MailValid.content.validate(content);
   if (contentValidation !== true) {
     return res.status(400).json({ error: true, message: contentValidation });
+  }
+
+  const sendAtValidation = !sendAt || MailValid.sendAt.validate(sendAt);
+  if (sendAtValidation !== true) {
+    return res.status(400).json({ error: true, message: sendAtValidation });
   }
 
   const needToSendValidation =

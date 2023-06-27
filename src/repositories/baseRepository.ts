@@ -46,7 +46,6 @@ class BaseRepository {
         `/${this.collectionName}`
       );
       data.id = this.generateId();
-      data.createdAt = new Date();
       collectionData.push(data);
       this.dbContext.save();
       return data;
@@ -62,7 +61,6 @@ class BaseRepository {
       );
       const itemToUpdate = collectionData.find((item: any) => item.id === id);
       if (itemToUpdate) {
-        dataToUpdate.updatedAt = new Date();
         Object.assign(itemToUpdate, dataToUpdate);
         this.dbContext.save();
         return itemToUpdate;
