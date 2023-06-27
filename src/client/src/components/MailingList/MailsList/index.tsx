@@ -6,18 +6,23 @@ import MailItem from "../MailItem";
 
 type MailsListProps = {
   mailsList: MAIL[];
+  stopRunBtnOnClick: Function;
 };
 
-function MailsList({ mailsList }: MailsListProps) {
+function MailsList({ mailsList, stopRunBtnOnClick }: MailsListProps) {
   const mailsListElem = React.useMemo(
     () => (
       <Stack width="100%" gap={1}>
         {mailsList.map((item, index) => (
-          <MailItem key={index} mail={item} />
+          <MailItem
+            key={index}
+            mail={item}
+            stopRunBtnOnClick={stopRunBtnOnClick}
+          />
         ))}
       </Stack>
     ),
-    [mailsList]
+    [mailsList, stopRunBtnOnClick]
   );
 
   return <Box sx={{ width: "100%" }}>{mailsListElem}</Box>;

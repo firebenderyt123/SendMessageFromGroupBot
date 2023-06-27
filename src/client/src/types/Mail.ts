@@ -9,4 +9,15 @@ type MAIL = {
   isPaused: boolean;
 };
 
+type UpdateMailData = {
+  name?: string;
+  image?: string;
+  content?: string;
+  sendAt?: string;
+  needToSend?: number;
+  totalSended?: number;
+  isPaused?: boolean;
+};
+
 export default MAIL;
+export { type UpdateMailData };

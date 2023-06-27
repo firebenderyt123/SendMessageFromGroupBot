@@ -1,10 +1,14 @@
-import { getMailsListRequest } from "../api/malingList";
+import { getMailsListRequest, updateMailRequest } from "../api/malingList";
 import { AppDispatch } from "../store";
 import {
   getMailsListFailed,
   getMailsListPending,
   getMailsListSuccess,
+  updateMailPending,
+  updateMailSuccess,
+  updateMailFailed,
 } from "../store/actions/mailingList";
+import { UpdateMailData } from "../types/Mail";
 
 const getMailsList = (token: string) => {
   return async (dispatch: AppDispatch) => {
@@ -23,4 +27,21 @@ const getMailsList = (token: string) => {
   };
 };
 
-export { getMailsList };
+const updateMail = (token: string, id: string, data: UpdateMailData) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(updateMailPending());
+      const response = await updateMailRequest(token, id, data);
+      if (response.status === 200) {
+        dispatch(updateMailSuccess(response.data));
+      } else {
+        dispatch(updateMailFailed(response.data));
+      }
+    } catch (error: any) {
+      dispatch(updateMailFailed(error));
+      throw error;
+    }
+  };
+};
+
+export { getMailsList, updateMail };

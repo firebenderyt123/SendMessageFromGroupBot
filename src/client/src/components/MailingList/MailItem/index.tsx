@@ -13,9 +13,10 @@ import MAIL from "../../../types/Mail";
 
 type MailItemProps = {
   mail: MAIL;
+  stopRunBtnOnClick: Function;
 };
 
-function MailItem({ mail }: MailItemProps) {
+function MailItem({ mail, stopRunBtnOnClick }: MailItemProps) {
   const {
     id,
     name,
@@ -24,8 +25,15 @@ function MailItem({ mail }: MailItemProps) {
     sendAt,
     totalSended,
     needToSend,
-    isPaused,
+    isPaused: paused,
   } = mail;
+
+  const [isPaused, setIsPaused] = React.useState<boolean>(paused);
+
+  const handleStopRunBtnOnClick = React.useCallback(() => {
+    setIsPaused((prev) => !prev);
+    stopRunBtnOnClick(id, { isPaused: !isPaused });
+  }, [id, isPaused, stopRunBtnOnClick]);
 
   const imageElem = React.useMemo(
     () =>
@@ -51,12 +59,14 @@ function MailItem({ mail }: MailItemProps) {
   const stopRunBtn = React.useMemo(
     () => (
       <Tooltip title={isPaused ? "Run" : "Stop"} placement="top">
-        <IconButton color={isPaused ? "success" : "warning"}>
+        <IconButton
+          color={isPaused ? "success" : "warning"}
+          onClick={handleStopRunBtnOnClick}>
           {isPaused ? <PlayCircleRoundedIcon /> : <PauseCircleRoundedIcon />}
         </IconButton>
       </Tooltip>
     ),
-    [isPaused]
+    [handleStopRunBtnOnClick, isPaused]
   );
 
   return (
