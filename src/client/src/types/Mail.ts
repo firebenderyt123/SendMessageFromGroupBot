@@ -3,8 +3,7 @@ type MAIL = {
   name: string;
   image?: string;
   content?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  sendAt: string;
   totalSended: number;
   needToSend: number;
   isPaused: boolean;

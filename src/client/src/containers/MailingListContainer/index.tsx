@@ -1,4 +1,5 @@
 import React from "react";
+import MailsList from "../../components/MailingList/MailsList";
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import { getMailsList } from "../../services/mailingList";
 import { selectMailsList } from "../../store/selectors/mailingList";
@@ -11,9 +12,11 @@ function MailingListContainer() {
     dispatch(getMailsList("12"));
   }, [dispatch]);
 
-  console.log(mailsList);
-
-  return <div>MailingListContainer</div>;
+  return (
+    <div>
+      <MailsList mailsList={mailsList} />
+    </div>
+  );
 }
 
 export default MailingListContainer;
