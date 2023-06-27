@@ -36,8 +36,6 @@ const MailValid = {
     validate: function (value: string) {
       return typeof value !== this.type
         ? `Invalid name type, might be ${this.type}`
-        : !value
-        ? "No name value"
         : value.length < 2
         ? "Min name length is 2 chars."
         : value.length > 18
@@ -51,8 +49,6 @@ const MailValid = {
     validate: function (value: string) {
       return typeof value !== this.type
         ? `Invalid image type, might be ${this.type}`
-        : !value
-        ? "No image value"
         : true;
     },
   },
@@ -62,8 +58,6 @@ const MailValid = {
     validate: function (value: string) {
       return typeof value !== this.type
         ? `Invalid content type, might be ${this.type}`
-        : !value
-        ? "No content value"
         : value.length < 10
         ? "Min content length is 10 chars."
         : value.length > 2048
@@ -77,8 +71,6 @@ const MailValid = {
     validate: function (value: string) {
       return typeof value !== this.type
         ? `Invalid sendAt type, might be ${this.type}`
-        : !value
-        ? "No sendAt value"
         : /^(0\d|1\d|2[0-3]):([0-5]\d)$/.test(value) || "Invalid time";
     },
   },
@@ -88,8 +80,6 @@ const MailValid = {
     validate: function (value: number) {
       return typeof value !== this.type
         ? `Invalid needToSend type, might be ${this.type}`
-        : !value
-        ? "No needToSend value"
         : value < -1
         ? "Min needToSend value is -1."
         : value > 365
@@ -103,8 +93,6 @@ const MailValid = {
     validate: function (value: number) {
       return typeof value !== this.type
         ? `Invalid totalSended type, might be ${this.type}`
-        : !value && value !== 0
-        ? "No totalSended value"
         : value < 0
         ? "Min totalSended value is 0."
         : value > 999999
@@ -118,8 +106,6 @@ const MailValid = {
     validate: function (value: boolean) {
       return typeof value !== this.type
         ? `Invalid isPaused type, might be ${this.type}`
-        : !value && value !== false
-        ? "No isPaused value"
         : true;
     },
   },

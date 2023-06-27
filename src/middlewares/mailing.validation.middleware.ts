@@ -53,41 +53,58 @@ const updateMailValid = (req: Request, res: Response, next: NextFunction) => {
     req.body;
 
   if (
-    !name &&
-    !image &&
-    !content &&
-    !sendAt &&
-    !needToSend &&
-    !totalSended &&
-    !isPaused
+    name === undefined &&
+    image === undefined &&
+    content === undefined &&
+    sendAt === undefined &&
+    needToSend === undefined &&
+    totalSended === undefined &&
+    isPaused === undefined
   ) {
     return res.status(400).json({ error: true, message: "No fields found" });
   }
 
-  const nameValidation = !name || MailValid.name.validate(name);
+  const nameValidation = name === undefined || MailValid.name.validate(name);
   if (nameValidation !== true) {
     return res.status(400).json({ error: true, message: nameValidation });
   }
 
-  const imageValidation = !image || MailValid.image.validate(image);
+  const imageValidation =
+    image === undefined || MailValid.image.validate(image);
   if (imageValidation !== true) {
     return res.status(400).json({ error: true, message: imageValidation });
   }
 
-  const contentValidation = !content || MailValid.content.validate(content);
+  const contentValidation =
+    content === undefined || MailValid.content.validate(content);
   if (contentValidation !== true) {
     return res.status(400).json({ error: true, message: contentValidation });
   }
 
-  const sendAtValidation = !sendAt || MailValid.sendAt.validate(sendAt);
+  const sendAtValidation =
+    sendAt === undefined || MailValid.sendAt.validate(sendAt);
   if (sendAtValidation !== true) {
     return res.status(400).json({ error: true, message: sendAtValidation });
   }
 
   const needToSendValidation =
-    !needToSend || MailValid.needToSend.validate(needToSend);
+    needToSend === undefined || MailValid.needToSend.validate(needToSend);
   if (needToSendValidation !== true) {
     return res.status(400).json({ error: true, message: needToSendValidation });
+  }
+
+  const totalSendedValidation =
+    totalSended === undefined || MailValid.totalSended.validate(totalSended);
+  if (totalSendedValidation !== true) {
+    return res
+      .status(400)
+      .json({ error: true, message: totalSendedValidation });
+  }
+
+  const isPausedValidation =
+    isPaused === undefined || MailValid.isPaused.validate(isPaused);
+  if (isPausedValidation !== true) {
+    return res.status(400).json({ error: true, message: isPausedValidation });
   }
 
   next();

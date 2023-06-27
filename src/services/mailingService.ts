@@ -31,13 +31,13 @@ class MailingService {
     if (mail) throw new CustomError("Mail with same name is exists", 400);
 
     const newData: UpdateMailData = {};
-    if (name) newData.name = name;
-    if (image) newData.image = image;
-    if (content) newData.content = content;
-    if (sendAt) newData.sendAt = sendAt;
-    if (needToSend) newData.needToSend = needToSend;
-    if (totalSended) newData.totalSended = totalSended;
-    if (isPaused) newData.isPaused = isPaused;
+    if (name !== undefined) newData.name = name;
+    if (image !== undefined) newData.image = image;
+    if (content !== undefined) newData.content = content;
+    if (sendAt !== undefined) newData.sendAt = sendAt;
+    if (needToSend !== undefined) newData.needToSend = needToSend;
+    if (totalSended !== undefined) newData.totalSended = totalSended;
+    if (isPaused !== undefined) newData.isPaused = isPaused;
 
     const updatedMail: MAIL = await mailingRepository.update(id, newData);
     if (!updatedMail) throw new CustomError("Mail not updated", 400);
