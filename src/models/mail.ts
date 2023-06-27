@@ -79,8 +79,7 @@ const MailValid = {
         ? `Invalid sendAt type, might be ${this.type}`
         : !value
         ? "No sendAt value"
-        : /^(0\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)$/.test(value) ||
-          "Invalid time";
+        : /^(0\d|1\d|2[0-3]):([0-5]\d)$/.test(value) || "Invalid time";
     },
   },
   needToSend: {
