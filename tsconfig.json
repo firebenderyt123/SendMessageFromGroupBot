@@ -17,5 +17,5 @@
     "esm": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["src/bot/*.ts"]
+  "exclude": ["src/bot/*", "src/client/*"]
 }

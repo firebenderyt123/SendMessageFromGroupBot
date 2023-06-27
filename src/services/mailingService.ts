@@ -38,15 +38,12 @@ class MailingService {
 
   async deleteMail(id: string): Promise<MAIL> {
     const deletedMail: MAIL = await mailingRepository.delete(id);
-    if (!deletedMail) throw new CustomError("Mail not deleted", 404);
+    if (!deletedMail) throw new CustomError("Mail to delete not found", 404);
     return deletedMail;
   }
 
   async searchAll(): Promise<MAIL[]> {
     const allMails: MAIL[] = await mailingRepository.getAll();
-    if (!allMails.length) {
-      throw new CustomError("Mails not found", 404);
-    }
     return allMails;
   }
 
