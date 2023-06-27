@@ -63,7 +63,6 @@ export default function mailingListReducer(
     case CREATE_MAIL_PENDING: {
       return {
         ...state,
-        mailsList: [],
         isLoading: true,
         error: null,
       };
@@ -87,7 +86,6 @@ export default function mailingListReducer(
     case UPDATE_MAIL_PENDING: {
       return {
         ...state,
-        mailsList: [],
         isLoading: true,
         error: null,
       };
@@ -95,10 +93,14 @@ export default function mailingListReducer(
     case UPDATE_MAIL_SUCCESS: {
       return {
         ...state,
-        mailsList: [
-          ...state.mailsList.filter((mail) => mail.id !== action.mail.id),
-          action.mail,
-        ],
+        mailsList: (() => {
+          const newMailsList: MAIL[] = [];
+          state.mailsList.forEach((item) => {
+            if (item.id !== action.mail.id) newMailsList.push(item);
+            else newMailsList.push(action.mail);
+          });
+          return newMailsList;
+        })(),
         isLoading: false,
       };
     }
@@ -114,7 +116,6 @@ export default function mailingListReducer(
     case DELETE_MAIL_PENDING: {
       return {
         ...state,
-        mailsList: [],
         isLoading: true,
         error: null,
       };

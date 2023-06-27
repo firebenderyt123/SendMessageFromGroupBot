@@ -31,22 +31,27 @@ function MailingListContainer() {
     [dispatch]
   );
 
-  const mailListElem = !error && !isLoading && (
+  const mailListElem = !error && (
     <MailsList
       mailsList={mailsList}
       stopRunBtnOnClick={handleStopRunBtnOnClick}
     />
   );
-  const loadingElem = isLoading && <CircularProgress color="primary" />;
-  const errorElem = error && <Alert severity="error">{error.message}</Alert>;
-
-  return (
+  const loadingElem = isLoading && (
     <Box
+      position="absolute"
       width="100%"
-      height="100vh"
+      height="100%"
       display="flex"
       justifyContent="center"
       alignItems="center">
+      <CircularProgress color="primary" />
+    </Box>
+  );
+  const errorElem = error && <Alert severity="error">{error.message}</Alert>;
+
+  return (
+    <Box position="relative" display="flex" minHeight="500px">
       {mailListElem}
       {loadingElem}
       {errorElem}

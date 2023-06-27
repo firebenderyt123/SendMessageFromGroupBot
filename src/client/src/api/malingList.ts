@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { defaultError, mailingUrl } from "../config/api";
-import MAIL, { UpdateMailData } from "../types/Mail";
+import { UpdateMailData } from "../types/Mail";
 
 const getMailsListRequest = async (token: string): Promise<AxiosResponse> => {
   try {
