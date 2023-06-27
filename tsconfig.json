@@ -17,5 +17,5 @@
     "esm": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["src/bot/*", "src/client/*"]
+  "exclude": ["src/bot/*", "src/client/*", "src/config/database.json"]
 }
