@@ -10,6 +10,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import MAIL from "../../../types/Mail";
+import Image from "../../ui/Image";
 
 type MailItemProps = {
   mail: MAIL;
@@ -37,7 +38,7 @@ function MailItem({ mail, stopRunBtnOnClick }: MailItemProps) {
 
   const imageElem = React.useMemo(
     () =>
-      imgSrc ? <img src={imgSrc} alt={name} width="50" height="50" /> : null,
+      imgSrc ? <Image src={imgSrc} alt={name} width={50} height={50} /> : null,
     [imgSrc, name]
   );
 

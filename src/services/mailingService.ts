@@ -52,9 +52,11 @@ class MailingService {
   }
 
   async uploadImage(id: string, image: Express.Multer.File): Promise<MAIL> {
+    const mail = await mailingRepository.getOne({ id });
+    if (mail.image) await mailingRepository.deleteImage(id);
     const updatedMail: MAIL | null = await mailingRepository.uploadImage(
       id,
-      image.path
+      image.path.replace("\\", "/")
     );
     if (!updatedMail) throw new CustomError("Mail image not uploaded", 400);
     return updatedMail;
