@@ -11,8 +11,7 @@ interface MAIL {
 
 type CreateMailData = {
   name: string;
-  image?: string;
-  content?: string;
+  content: string;
   sendAt: string;
   needToSend: number;
   totalSended: number;
@@ -21,7 +20,6 @@ type CreateMailData = {
 
 type UpdateMailData = {
   name?: string;
-  image?: string;
   content?: string;
   sendAt?: string;
   needToSend?: number;
@@ -41,15 +39,6 @@ const MailValid = {
         : value.length > 18
         ? "Max name length is 18 chars."
         : /^[a-zа-яіїє]{2,18}$/i.test(value) || "Name might have only a-z, а-я";
-    },
-  },
-  image: {
-    required: false,
-    type: "string",
-    validate: function (value: string) {
-      return typeof value !== this.type
-        ? `Invalid image type, might be ${this.type}`
-        : true;
     },
   },
   content: {

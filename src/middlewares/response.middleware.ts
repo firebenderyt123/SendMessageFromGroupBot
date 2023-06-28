@@ -20,7 +20,7 @@ const errorMiddleware = (
 ): void => {
   const statusCode: number = err.statusCode || 500;
   const errorMessage: string = err.message || "Internal Server Error";
-  res.status(statusCode).json({ error: true, message: errorMessage });
+  res.status(statusCode).json({ message: errorMessage });
 
   next();
 };

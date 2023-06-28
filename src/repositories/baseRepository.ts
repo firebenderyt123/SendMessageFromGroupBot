@@ -47,7 +47,7 @@ class BaseRepository {
       );
       data.id = this.generateId();
       collectionData.push(data);
-      this.dbContext.save();
+      await this.dbContext.save();
       return data;
     } catch (error) {
       return null;
@@ -62,7 +62,7 @@ class BaseRepository {
       const itemToUpdate = collectionData.find((item: any) => item.id === id);
       if (itemToUpdate) {
         Object.assign(itemToUpdate, dataToUpdate);
-        this.dbContext.save();
+        await this.dbContext.save();
         return itemToUpdate;
       }
       return null;
@@ -79,7 +79,7 @@ class BaseRepository {
       const itemToDelete = collectionData.find((item: any) => item.id === id);
       if (itemToDelete) {
         collectionData.splice(collectionData.indexOf(itemToDelete), 1);
-        this.dbContext.save();
+        await this.dbContext.save();
         return itemToDelete;
       }
       return null;

@@ -7,7 +7,9 @@ import {
 import {
   createMailValid,
   updateMailValid,
+  uploadImageValid,
 } from "../middlewares/mailing.validation.middleware";
+import { upload } from "../utils/imageUpload";
 
 const router: Router = Router();
 
@@ -82,6 +84,43 @@ router.delete(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const mail = await mailingService.deleteMail(req.params.id);
+      res.locals.data = mail;
+    } catch (err) {
+      next(err);
+    } finally {
+      next();
+    }
+  },
+  responseMiddleware,
+  errorMiddleware
+);
+
+router.post(
+  "/:id/image",
+  upload.single("image"),
+  uploadImageValid,
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const mail = await mailingService.uploadImage(
+        req.params.id,
+        req?.file as Express.Multer.File
+      );
+      res.locals.data = mail;
+    } catch (err) {
+      next(err);
+    } finally {
+      next();
+    }
+  },
+  responseMiddleware,
+  errorMiddleware
+);
+
+router.delete(
+  "/:id/image",
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const mail = await mailingService.deleteImage(req.params.id);
       res.locals.data = mail;
     } catch (err) {
       next(err);
