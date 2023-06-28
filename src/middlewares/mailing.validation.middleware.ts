@@ -4,7 +4,7 @@ import { MailValid } from "../models/mail";
 import { getMissingFields } from "../utils/validation";
 
 const createMailValid = (req: Request, res: Response, next: NextFunction) => {
-  const { name, content, sendAt, needToSend = -1 } = req.body;
+  const { name, content, sendAt, needToSend = 0 } = req.body;
 
   const missingFields = getMissingFields(req, MailValid);
 

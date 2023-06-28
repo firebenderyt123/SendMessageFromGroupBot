@@ -11,7 +11,6 @@ type MAIL = {
 
 type UpdateMailData = {
   name?: string;
-  image?: string;
   content?: string;
   sendAt?: string;
   needToSend?: number;

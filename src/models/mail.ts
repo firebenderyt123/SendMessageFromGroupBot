@@ -69,8 +69,8 @@ const MailValid = {
     validate: function (value: number) {
       return typeof value !== this.type
         ? `Invalid needToSend type, might be ${this.type}`
-        : value < -1
-        ? "Min needToSend value is -1."
+        : value < 0
+        ? "Min needToSend value is 0."
         : value > 365
         ? "Max needToSend value is 365."
         : true;

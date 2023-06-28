@@ -5,19 +5,19 @@ import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import Paper from "@mui/material/Paper";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
-import MAIL from "../../../types/Mail";
+import Item from "../Item";
 import Image from "../../ui/Image";
+import MAIL from "../../../types/Mail";
 
 type MailItemProps = {
   mail: MAIL;
+  mailEditToggle: Function;
   stopRunBtnOnClick: Function;
 };
 
-function MailItem({ mail, stopRunBtnOnClick }: MailItemProps) {
+function MailItem({ mail, mailEditToggle, stopRunBtnOnClick }: MailItemProps) {
   const {
     id,
     name,
@@ -36,6 +36,10 @@ function MailItem({ mail, stopRunBtnOnClick }: MailItemProps) {
     stopRunBtnOnClick(id, { isPaused: !isPaused });
   }, [id, isPaused, stopRunBtnOnClick]);
 
+  const handleMailEditOnClick = React.useCallback(() => {
+    mailEditToggle(id);
+  }, [id, mailEditToggle]);
+
   const imageElem = React.useMemo(
     () =>
       imgSrc ? <Image src={imgSrc} alt={name} width={50} height={50} /> : null,
@@ -43,7 +47,7 @@ function MailItem({ mail, stopRunBtnOnClick }: MailItemProps) {
   );
 
   const needToSendElem = React.useMemo(
-    () => (needToSend === -1 ? "∞" : needToSend),
+    () => (needToSend === 0 ? "∞" : needToSend),
     [needToSend]
   );
 
@@ -94,17 +98,17 @@ function MailItem({ mail, stopRunBtnOnClick }: MailItemProps) {
             {sendAt}
           </Grid>
           <Grid item xs={1}>
-            {totalSended}
+            {needToSendElem}
           </Grid>
           <Grid item xs={1}>
-            {needToSendElem}
+            {totalSended}
           </Grid>
           <Grid container item xs={1}>
             <Grid container item gap={1}>
               <Grid item>{stopRunBtn}</Grid>
               <Grid item>
                 <Tooltip title="Edit" placement="top">
-                  <IconButton color="primary">
+                  <IconButton color="primary" onClick={handleMailEditOnClick}>
                     <AutoFixHighRoundedIcon />
                   </IconButton>
                 </Tooltip>
@@ -117,14 +121,4 @@ function MailItem({ mail, stopRunBtnOnClick }: MailItemProps) {
   );
 }
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(3),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-  border: "1px solid #eee",
-  boxShadow: "none",
-}));
-
-export default MailItem;
+export default React.memo(MailItem);

@@ -20,4 +20,4 @@ function Image({ src, alt, width, height, ...rest }: ImageProps) {
   );
 }
 
-export default Image;
+export default React.memo(Image);

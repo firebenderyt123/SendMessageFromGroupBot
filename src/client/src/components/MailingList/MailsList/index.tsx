@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import MAIL from "../../../types/Mail";
 import MailItem from "../MailItem";
+import MailItemEdit from "../MailItemEdit";
 
 type MailsListProps = {
   mailsList: MAIL[];
@@ -10,19 +11,34 @@ type MailsListProps = {
 };
 
 function MailsList({ mailsList, stopRunBtnOnClick }: MailsListProps) {
+  const [itemIdEditing, setItemIdEditing] = React.useState<string>("");
+
+  const handleMailEditToggle = React.useCallback((id: string) => {
+    setItemIdEditing(id);
+  }, []);
+
   const mailsListElem = React.useMemo(
     () => (
       <Stack width="100%" gap={1}>
-        {mailsList.map((item, index) => (
-          <MailItem
-            key={index}
-            mail={item}
-            stopRunBtnOnClick={stopRunBtnOnClick}
-          />
-        ))}
+        {mailsList.map((item, index) =>
+          itemIdEditing !== item.id ? (
+            <MailItem
+              key={index}
+              mail={item}
+              mailEditToggle={handleMailEditToggle}
+              stopRunBtnOnClick={stopRunBtnOnClick}
+            />
+          ) : (
+            <MailItemEdit
+              key={index}
+              mail={item}
+              mailEditToggle={handleMailEditToggle}
+            />
+          )
+        )}
       </Stack>
     ),
-    [mailsList, stopRunBtnOnClick]
+    [handleMailEditToggle, itemIdEditing, mailsList, stopRunBtnOnClick]
   );
 
   return <Box sx={{ width: "100%" }}>{mailsListElem}</Box>;
