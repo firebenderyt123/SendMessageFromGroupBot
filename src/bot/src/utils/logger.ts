@@ -1,6 +1,8 @@
 import fs from "fs";
+import path from "path";
 
-const logStream = fs.createWriteStream("../bot.log", { flags: "a" });
+const logFilePath = path.resolve(__dirname, "../../bot.log");
+const logStream = fs.createWriteStream(logFilePath, { flags: "a" });
 
 const logger = (type: string, message: string) => {
   const currentTime = new Date().toISOString();

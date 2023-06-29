@@ -2,7 +2,9 @@
 import fs from "fs";
 import path from "path";
 import { StartContext } from "../contexts/StartContext";
-import { sendMessage, forwardMessage } from "../services/messages";
+import { forwardMessage, sendError, sendMessage } from "../services/messages";
+import { createUser, getUser } from "../services/users";
+import { logger } from "../utils/logger";
 
 let postData: any;
 const dataFilePath = path.join(__dirname, "../../data.json");
@@ -14,7 +16,17 @@ fs.readFile(dataFilePath, "utf8", (err: any, data: any) => {
 });
 
 async function start(ctx: StartContext): Promise<void> {
-  const { startPayload } = ctx;
+  const { from, startPayload } = ctx;
+
+  if (!from) {
+    logger("Error", "Message not sent! 'from' property is undefined");
+    return;
+  }
+
+  const user = await getUser(from.id);
+  if (user.error) {
+    await createUser(from.id, from.first_name);
+  }
 
   if (!startPayload) {
     await sendMessage(ctx, `Welcome to the files bot.`);

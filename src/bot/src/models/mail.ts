@@ -9,4 +9,4 @@ interface MAIL {
   isPaused: boolean;
 }
 
-export { MAIL };
+export default MAIL;

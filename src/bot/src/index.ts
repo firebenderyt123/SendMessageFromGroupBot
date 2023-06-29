@@ -4,8 +4,7 @@ import LocalSession from "telegraf-session-local";
 import { start } from "./commands";
 
 import dotenv from "dotenv";
-import path from "path";
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+dotenv.config();
 
 const botToken = process.env.BOT_TOKEN;
 const channelId = process.env.CHANNEL_ID;

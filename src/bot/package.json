@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "ts-node src/index.ts",
-    "start": "ts-node dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "start": "node dist/index.js",
     "build": "tsc -p ."
   },
   "author": "",
@@ -14,6 +14,7 @@
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "node-schedule": "^2.1.1",
+    "nodemon": "^2.0.22",
     "telegraf": "^4.12.2",
     "telegraf-session-local": "^2.1.1"
   },
