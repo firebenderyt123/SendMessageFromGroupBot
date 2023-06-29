@@ -1,8 +1,10 @@
 import { Express } from "express";
+import { router as historyRoutes } from "./historyRoutes";
 import { router as mailingRoutes } from "./mailingRoutes";
 import { router as usersRoutes } from "./usersRoutes";
 
 const initRoutes = (app: Express): void => {
+  app.use("/api/history", historyRoutes);
   app.use("/api/mailing", mailingRoutes);
   app.use("/api/users", usersRoutes);
 };
