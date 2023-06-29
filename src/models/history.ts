@@ -2,11 +2,13 @@ interface FILE_HISTORY {
   id: string;
   postId: number; // post Id
   fileIds: number[]; // forward messages Ids
+  date: Date;
 }
 
 type CreateFileHistoryData = {
   postId: number;
   fileIds: number[];
+  date: Date;
 };
 
 type SearchFileHistoryData = {

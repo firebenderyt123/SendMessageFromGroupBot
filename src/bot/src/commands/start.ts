@@ -2,9 +2,10 @@
 import fs from "fs";
 import path from "path";
 import { StartContext } from "../contexts/StartContext";
-import { forwardMessage, sendError, sendMessage } from "../services/messages";
+import { createFileHistory } from "../services/history";
 import { createUser, getUser } from "../services/users";
 import { logger } from "../utils/logger";
+import { forwardMessage, sendMessage } from "../utils/messages";
 
 let postData: any;
 const dataFilePath = path.join(__dirname, "../../data.json");
@@ -23,29 +24,37 @@ async function start(ctx: StartContext): Promise<void> {
     return;
   }
 
+  // Add user to database if he's not there
   const user = await getUser(from.id);
   if (user.error) {
     await createUser(from.id, from.first_name);
   }
 
+  // Message if no payload
   if (!startPayload) {
     await sendMessage(ctx, `Welcome to the files bot.`);
     return;
   }
 
+  // if command like /start?post_${data}
   if (startPayload.startsWith("post_")) {
-    const postId = startPayload.replace("post_", "");
-    const postArray = postData[postId] || [];
-    if (postArray.length === 0) {
+    const postId = +startPayload.replace("post_", "");
+    if (!postId) {
+      await sendMessage(ctx, `Invalid post id :(`);
+      return;
+    }
+
+    const fileIds: string[] = postData[postId] || [];
+
+    if (!fileIds.length || fileIds[0] === "error") {
       await sendMessage(ctx, `Post with No. ${postId} not found :(`);
     } else {
-      for (let i = 0; i < postArray.length; i++) {
-        const msgId = postArray[i];
+      const numbericFileIds = fileIds.map((fileId: string) => +fileId);
+      numbericFileIds.forEach(async (msgId) => {
         await forwardMessage(ctx, msgId);
-      }
+      });
+      await createFileHistory(postId, numbericFileIds);
     }
-  } else {
-    await forwardMessage(ctx, +startPayload);
   }
 }
 

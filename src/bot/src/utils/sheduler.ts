@@ -1,7 +1,7 @@
 import schedule from "node-schedule";
-import { getMailsList } from "./mailingList";
 import { sendMessage } from "./messages";
-import { getUsers } from "./users";
+import { getMailsList } from "../services/mailingList";
+import { getUsers } from "../services/users";
 import MAIL from "../models/mail";
 
 const INTERVAL = 24 * 60 * 60 * 1000; // 24 hours

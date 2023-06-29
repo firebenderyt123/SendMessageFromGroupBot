@@ -12,6 +12,7 @@ class FileHistoryService {
     const newData: CreateFileHistoryData = {
       postId,
       fileIds,
+      date: new Date(),
     };
 
     const createdFileHistory: FileHistory | null =
