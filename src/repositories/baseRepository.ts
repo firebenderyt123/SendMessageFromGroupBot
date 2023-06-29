@@ -54,7 +54,7 @@ class BaseRepository {
     }
   }
 
-  async update(id: string, dataToUpdate: any): Promise<any> {
+  async update(id: string | number, dataToUpdate: any): Promise<any> {
     try {
       const collectionData = await this.dbContext.getData(
         `/${this.collectionName}`
@@ -71,7 +71,7 @@ class BaseRepository {
     }
   }
 
-  async delete(id: string): Promise<any> {
+  async delete(id: string | number): Promise<any> {
     try {
       const collectionData = await this.dbContext.getData(
         `/${this.collectionName}`
