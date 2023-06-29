@@ -1,5 +1,6 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import dayjs, { Dayjs } from "dayjs";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
@@ -7,34 +8,49 @@ import Tooltip from "@mui/material/Tooltip";
 import Item from "../Item";
 import Image from "../../ui/Image";
 import Input from "../../ui/Input";
+import TimePicker from "../../ui/TimePicker";
 import MAIL, { UpdateMailData } from "../../../types/Mail";
 import { mailValid } from "../../../validation/mail";
+
+type FieldsData = {
+  name: string;
+  content: string;
+  sendAt: Dayjs;
+  needToSend: number;
+};
 
 type MailItemEditProps = {
   mail: MAIL;
   mailEditToggle: Function;
+  onDataEdit: Function;
 };
 
-function MailItemEdit({ mail, mailEditToggle }: MailItemEditProps) {
+function MailItemEdit({ mail, mailEditToggle, onDataEdit }: MailItemEditProps) {
   const { id, name, image: imgSrc, content, sendAt, needToSend } = mail;
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
-  } = useForm<UpdateMailData>({
+  } = useForm<FieldsData>({
     defaultValues: {
       name,
       content,
-      sendAt,
       needToSend,
     },
   });
-  const onSubmit: SubmitHandler<UpdateMailData> = (data) => console.log(data);
-
-  const handleMailEditToggle = React.useCallback(() => {
-    // saveBtnOnClick(id, data);
-  }, [id, mailEditToggle]);
+  const onSubmit: SubmitHandler<FieldsData> = React.useCallback(
+    (data) => {
+      const retData: UpdateMailData = {
+        ...data,
+        sendAt: data.sendAt.format("HH:mm"),
+      };
+      mailEditToggle(id);
+      onDataEdit(id, retData);
+    },
+    [id, mailEditToggle, onDataEdit]
+  );
 
   const nameField = React.useMemo(
     () => (
@@ -66,14 +82,27 @@ function MailItemEdit({ mail, mailEditToggle }: MailItemEditProps) {
 
   const sendAtField = React.useMemo(
     () => (
-      <Input
-        label="Send at"
-        {...register("sendAt", mailValid.sendAt)}
-        error={!!errors.sendAt}
-        helperText={errors.sendAt?.message}
+      <Controller
+        control={control}
+        name="sendAt"
+        rules={mailValid.sendAt}
+        defaultValue={dayjs(`2022-04-17T${sendAt}`)}
+        render={({ field }) => (
+          <TimePicker
+            label="Send at"
+            onChange={field.onChange as any}
+            value={field.value || null}
+            slotProps={{
+              textField: {
+                error: !!errors.sendAt,
+                helperText: errors.sendAt?.message,
+              },
+            }}
+          />
+        )}
       />
     ),
-    [errors.sendAt, register]
+    [control, errors.sendAt, sendAt]
   );
 
   const needToSendField = React.useMemo(
@@ -135,10 +164,7 @@ function MailItemEdit({ mail, mailEditToggle }: MailItemEditProps) {
             </Grid>
             <Grid item xs={1}>
               <Tooltip title="Save" placement="top">
-                <IconButton
-                  color="success"
-                  onClick={handleMailEditToggle}
-                  type="submit">
+                <IconButton color="success" type="submit">
                   <SaveRoundedIcon />
                 </IconButton>
               </Tooltip>

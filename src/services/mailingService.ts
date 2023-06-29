@@ -26,7 +26,8 @@ class MailingService {
   async updateMail(id: string, data: any): Promise<MAIL> {
     const { name, content, sendAt, needToSend, totalSended, isPaused } = data;
     const mail = await mailingRepository.getOne({ name });
-    if (mail) throw new CustomError("Mail with same name is exists", 400);
+    if (mail && mail.id !== id)
+      throw new CustomError("Mail with same name is exists", 400);
 
     const newData: UpdateMailData = {};
     if (name !== undefined) newData.name = name;

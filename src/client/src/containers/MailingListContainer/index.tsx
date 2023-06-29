@@ -24,7 +24,7 @@ function MailingListContainer() {
     dispatch(getMailsList(token));
   }, [dispatch]);
 
-  const handleStopRunBtnOnClick = React.useCallback(
+  const handleEditData = React.useCallback(
     (id: string, data: UpdateMailData) => {
       dispatch(updateMail(token, id, data));
     },
@@ -32,10 +32,7 @@ function MailingListContainer() {
   );
 
   const mailListElem = !error && (
-    <MailsList
-      mailsList={mailsList}
-      stopRunBtnOnClick={handleStopRunBtnOnClick}
-    />
+    <MailsList mailsList={mailsList} onDataEdit={handleEditData} />
   );
   const loadingElem = isLoading && (
     <Box
@@ -48,7 +45,11 @@ function MailingListContainer() {
       <CircularProgress color="primary" />
     </Box>
   );
-  const errorElem = error && <Alert severity="error">{error.message}</Alert>;
+  const errorElem = error && (
+    <Box display="flex">
+      <Alert severity="error">{error.message}</Alert>
+    </Box>
+  );
 
   return (
     <Box position="relative" display="flex" minHeight="500px">

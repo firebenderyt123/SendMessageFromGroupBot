@@ -1,20 +1,20 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import MAIL from "../../../types/Mail";
+import MAIL, { UpdateMailData } from "../../../types/Mail";
 import MailItem from "../MailItem";
 import MailItemEdit from "../MailItemEdit";
 
 type MailsListProps = {
   mailsList: MAIL[];
-  stopRunBtnOnClick: Function;
+  onDataEdit: Function;
 };
 
-function MailsList({ mailsList, stopRunBtnOnClick }: MailsListProps) {
-  const [itemIdEditing, setItemIdEditing] = React.useState<string>("");
+function MailsList({ mailsList, onDataEdit }: MailsListProps) {
+  const [itemIdEditing, setItemIdEditing] = React.useState<string | null>(null);
 
   const handleMailEditToggle = React.useCallback((id: string) => {
-    setItemIdEditing(id);
+    setItemIdEditing((prev) => (prev !== id ? id : null));
   }, []);
 
   const mailsListElem = React.useMemo(
@@ -26,19 +26,20 @@ function MailsList({ mailsList, stopRunBtnOnClick }: MailsListProps) {
               key={index}
               mail={item}
               mailEditToggle={handleMailEditToggle}
-              stopRunBtnOnClick={stopRunBtnOnClick}
+              onDataEdit={onDataEdit}
             />
           ) : (
             <MailItemEdit
               key={index}
               mail={item}
               mailEditToggle={handleMailEditToggle}
+              onDataEdit={onDataEdit}
             />
           )
         )}
       </Stack>
     ),
-    [handleMailEditToggle, itemIdEditing, mailsList, stopRunBtnOnClick]
+    [handleMailEditToggle, itemIdEditing, mailsList, onDataEdit]
   );
 
   return <Box sx={{ width: "100%" }}>{mailsListElem}</Box>;

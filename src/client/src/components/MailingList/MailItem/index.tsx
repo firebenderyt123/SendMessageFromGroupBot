@@ -14,10 +14,10 @@ import MAIL from "../../../types/Mail";
 type MailItemProps = {
   mail: MAIL;
   mailEditToggle: Function;
-  stopRunBtnOnClick: Function;
+  onDataEdit: Function;
 };
 
-function MailItem({ mail, mailEditToggle, stopRunBtnOnClick }: MailItemProps) {
+function MailItem({ mail, mailEditToggle, onDataEdit }: MailItemProps) {
   const {
     id,
     name,
@@ -33,8 +33,8 @@ function MailItem({ mail, mailEditToggle, stopRunBtnOnClick }: MailItemProps) {
 
   const handleStopRunBtnOnClick = React.useCallback(() => {
     setIsPaused((prev) => !prev);
-    stopRunBtnOnClick(id, { isPaused: !isPaused });
-  }, [id, isPaused, stopRunBtnOnClick]);
+    onDataEdit(id, { isPaused: !isPaused });
+  }, [id, isPaused, onDataEdit]);
 
   const handleMailEditOnClick = React.useCallback(() => {
     mailEditToggle(id);
