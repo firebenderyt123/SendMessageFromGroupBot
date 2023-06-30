@@ -42,7 +42,7 @@ function MailItem({ mail, mailEditToggle, onDataEdit }: MailItemProps) {
 
   const imageElem = React.useMemo(
     () =>
-      imgSrc ? <Image src={imgSrc} alt={name} width={50} height={50} /> : null,
+      imgSrc ? <Image src={imgSrc} alt={name} sx={{ margin: "auto" }} /> : null,
     [imgSrc, name]
   );
 

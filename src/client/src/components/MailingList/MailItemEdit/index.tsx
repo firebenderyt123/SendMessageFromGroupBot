@@ -1,12 +1,13 @@
 import React from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import ImageUploader from "../ImageUploader";
 import Item from "../Item";
-import Image from "../../ui/Image";
 import Input from "../../ui/Input";
 import TimePicker from "../../ui/TimePicker";
 import MAIL, { UpdateMailData } from "../../../types/Mail";
@@ -50,6 +51,11 @@ function MailItemEdit({ mail, mailEditToggle, onDataEdit }: MailItemEditProps) {
       onDataEdit(id, retData);
     },
     [id, mailEditToggle, onDataEdit]
+  );
+
+  const onCancel = React.useCallback(
+    () => mailEditToggle(id),
+    [id, mailEditToggle]
   );
 
   const nameField = React.useMemo(
@@ -125,9 +131,19 @@ function MailItemEdit({ mail, mailEditToggle, onDataEdit }: MailItemEditProps) {
   );
 
   const imageElem = React.useMemo(
-    () =>
-      imgSrc ? <Image src={imgSrc} alt={name} width={50} height={50} /> : null,
+    () => <ImageUploader src={imgSrc} alt={name} />,
     [imgSrc, name]
+  );
+
+  const cancelBtn = React.useMemo(
+    () => (
+      <Tooltip title="Cancel" placement="top">
+        <IconButton color="error" onClick={onCancel}>
+          <CancelRoundedIcon />
+        </IconButton>
+      </Tooltip>
+    ),
+    [onCancel]
   );
 
   return (
@@ -162,12 +178,17 @@ function MailItemEdit({ mail, mailEditToggle, onDataEdit }: MailItemEditProps) {
             <Grid item xs={2}>
               {needToSendField}
             </Grid>
-            <Grid item xs={1}>
-              <Tooltip title="Save" placement="top">
-                <IconButton color="success" type="submit">
-                  <SaveRoundedIcon />
-                </IconButton>
-              </Tooltip>
+            <Grid container item xs={1}>
+              <Grid container item gap={1}>
+                <Grid item>{cancelBtn}</Grid>
+                <Grid item>
+                  <Tooltip title="Save" placement="top">
+                    <IconButton color="success" type="submit">
+                      <SaveRoundedIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

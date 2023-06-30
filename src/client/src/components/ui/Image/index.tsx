@@ -1,23 +1,14 @@
 import React from "react";
-import { mainUrl } from "../../../config/api";
+import Avatar, { AvatarProps } from "@mui/material/Avatar";
+import { rootUrl } from "../../../config/api";
 
-type ImageProps = {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-};
-
-function Image({ src, alt, width, height, ...rest }: ImageProps) {
-  return (
-    <img
-      src={`${mainUrl}/${src}`}
-      alt={alt}
-      width={width}
-      height={height}
-      {...rest}
-    />
+function Image({ src, alt, ...rest }: AvatarProps) {
+  const imgSrc = React.useMemo(
+    () => (!src?.startsWith("data:image") ? `${rootUrl}/${src}` : src),
+    [src]
   );
+
+  return <Avatar src={imgSrc} alt={alt} {...rest} />;
 }
 
 export default React.memo(Image);

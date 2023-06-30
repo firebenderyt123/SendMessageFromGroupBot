@@ -15,6 +15,7 @@ const getMailsList = (token: string) => {
     try {
       dispatch(getMailsListPending());
       const response = await getMailsListRequest(token);
+      console.log(response);
       if (response.status === 200) {
         dispatch(getMailsListSuccess(response.data));
       } else {
@@ -22,7 +23,6 @@ const getMailsList = (token: string) => {
       }
     } catch (error: any) {
       dispatch(getMailsListFailed(error));
-      throw error;
     }
   };
 };
@@ -39,7 +39,6 @@ const updateMail = (token: string, id: string, data: UpdateMailData) => {
       }
     } catch (error: any) {
       dispatch(updateMailFailed(error));
-      throw error;
     }
   };
 };

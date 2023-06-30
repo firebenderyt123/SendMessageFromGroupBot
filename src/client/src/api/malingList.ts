@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { defaultError, mailingUrl } from "../config/api";
+import { mailingUrl } from "../config/api";
 import { UpdateMailData } from "../types/Mail";
 
 const getMailsListRequest = async (token: string): Promise<AxiosResponse> => {
@@ -11,7 +11,8 @@ const getMailsListRequest = async (token: string): Promise<AxiosResponse> => {
     });
     return response;
   } catch (error: any) {
-    return error?.response || defaultError;
+    if (error?.message) throw error;
+    return error?.response;
   }
 };
 
@@ -28,7 +29,8 @@ const updateMailRequest = async (
     });
     return response;
   } catch (error: any) {
-    return error?.response || defaultError;
+    if (error?.message) throw error;
+    return error?.response;
   }
 };
 

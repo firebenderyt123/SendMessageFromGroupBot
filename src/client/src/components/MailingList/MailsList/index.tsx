@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import MAIL, { UpdateMailData } from "../../../types/Mail";
+import MAIL from "../../../types/Mail";
 import MailItem from "../MailItem";
 import MailItemEdit from "../MailItemEdit";
 
