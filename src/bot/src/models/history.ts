@@ -10,5 +10,16 @@ type CreateFileHistoryData = {
   fileIds: number[];
 };
 
+type FileHistoryStats = {
+  daysAgo: {
+    "1": Date[];
+    "3": Date[];
+    "7": Date[];
+    "28": Date[];
+    "182": Date[];
+    "365": Date[];
+  };
+};
+
 export default FILE_HISTORY;
-export { CreateFileHistoryData };
+export { CreateFileHistoryData, FileHistoryStats };

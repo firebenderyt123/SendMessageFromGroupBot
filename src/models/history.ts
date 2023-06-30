@@ -11,6 +11,17 @@ type CreateFileHistoryData = {
   date: Date;
 };
 
+type FileHistoryStats = {
+  daysAgo: {
+    "1": Date[];
+    "3": Date[];
+    "7": Date[];
+    "28": Date[];
+    "182": Date[];
+    "365": Date[];
+  };
+};
+
 type SearchFileHistoryData = {
   id: string;
 };
@@ -44,4 +55,9 @@ const FileHistoryValid = {
 };
 
 export default FILE_HISTORY;
-export { CreateFileHistoryData, SearchFileHistoryData, FileHistoryValid };
+export {
+  CreateFileHistoryData,
+  FileHistoryStats,
+  SearchFileHistoryData,
+  FileHistoryValid,
+};

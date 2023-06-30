@@ -15,8 +15,8 @@ router.get(
   "/",
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const mails = await usersService.searchAll();
-      res.locals.data = mails;
+      const users = await usersService.searchAll();
+      res.locals.data = users;
     } catch (err) {
       next(err);
     } finally {
@@ -31,8 +31,8 @@ router.get(
   "/:id",
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const mail = await usersService.search({ id: +req.params.id });
-      res.locals.data = mail;
+      const user = await usersService.search({ id: +req.params.id });
+      res.locals.data = user;
     } catch (err) {
       next(err);
     } finally {
@@ -48,8 +48,8 @@ router.post(
   createUserValid,
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const mail = await usersService.createUser(req.body);
-      res.locals.data = mail;
+      const user = await usersService.createUser(req.body);
+      res.locals.data = user;
     } catch (err) {
       next(err);
     } finally {
@@ -65,8 +65,8 @@ router.put(
   updateUserValid,
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const mail = await usersService.updateUser(+req.params.id, req.body);
-      res.locals.data = mail;
+      const user = await usersService.updateUser(+req.params.id, req.body);
+      res.locals.data = user;
     } catch (err) {
       next(err);
     } finally {
@@ -81,8 +81,8 @@ router.delete(
   "/:id",
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const mail = await usersService.deleteUser(+req.params.id);
-      res.locals.data = mail;
+      const user = await usersService.deleteUser(+req.params.id);
+      res.locals.data = user;
     } catch (err) {
       next(err);
     } finally {

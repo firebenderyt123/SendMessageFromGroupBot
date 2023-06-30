@@ -1,7 +1,6 @@
 import { Telegraf } from "telegraf";
 import LocalSession from "telegraf-session-local";
-
-import { start } from "./commands";
+import { start, stats } from "./commands";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -18,7 +17,7 @@ const bot = new Telegraf(botToken);
 bot.use(new LocalSession({ database: "./session.json" }).middleware());
 
 bot.start(async (ctx) => await start(ctx));
-// bot.command("stats", async (ctx) => await stats(ctx));
+bot.command("stats", async (ctx) => await stats(ctx));
 
 // bot started info
 bot.telegram.getMe().then((botInfo) => {

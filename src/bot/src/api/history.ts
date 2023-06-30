@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { defaultError, historyUrl } from "../config/api";
+import { defaultError, fileStatsUrl, historyUrl } from "../config/api";
 import { CreateFileHistoryData } from "../models/history";
 
 async function createFileHistoryRequest(
@@ -18,4 +18,19 @@ async function createFileHistoryRequest(
   }
 }
 
-export { createFileHistoryRequest };
+async function getFileHistoryStatsRequest(
+  token: string
+): Promise<AxiosResponse> {
+  try {
+    const response = await axios.get(fileStatsUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error: any) {
+    return error?.response || defaultError;
+  }
+}
+
+export { createFileHistoryRequest, getFileHistoryStatsRequest };

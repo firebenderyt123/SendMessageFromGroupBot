@@ -1,35 +1,39 @@
-// import { stats as s } from "../config";
+import { Context } from "telegraf";
+import { getFileHistoryStats } from "../services/history";
+import { sendMessage } from "../utils/messages";
 
-// const statsRegex = /^\/stats(\s+)(.*)?$/i;
+async function stats(ctx: Context): Promise<void> {
+  const { data, error } = await getFileHistoryStats();
 
-// const getStatsParam = (text: string) => {
-//   const match = text.match(statsRegex);
-//   return match ? match[2] : null;
-// };
+  if (error || !data?.daysAgo) {
+    await sendMessage(ctx, "Something went wrong!");
+    return;
+  }
 
-// const stats = async ({ ctx, logger }: any) => {
-//   const text = ctx.message.text;
-//   const param = getStatsParam(text);
+  const {
+    "1": day,
+    "3": threeDays,
+    "7": week,
+    "28": month,
+    "182": sixMonths,
+    "365": year,
+  } = data?.daysAgo;
 
-//   if (param === "save") {
-//     s.saveStats();
-//     return await ctx.reply("Stats saved successfully!");
-//   }
+  const statsMessage =
+    `Stats for all users:
+    ` +
+    `Today: ${day.length} requests
+    ` +
+    `Three days: ${threeDays.length} requests
+    ` +
+    `This week: ${week.length} requests
+    ` +
+    `This month: ${month.length} requests
+    ` +
+    `Half year: ${sixMonths.length} requests
+    ` +
+    `This year: ${year.length} requests`;
+  await sendMessage(ctx, statsMessage);
+}
 
-//   const { day, week, month, year, allTime }: any = s.getStats();
-//   await ctx.reply(
-//     `Stats for all users:\n
-//   ` +
-//       `Today: ${day} messages
-//   ` +
-//       `This week: ${week} messages
-//   ` +
-//       `This month: ${month} messages
-//   ` +
-//       `This year: ${year} messages
-//   ` +
-//       `All time: ${allTime} messages`
-//   );
-// };
-
-// export { stats };
+export { stats };

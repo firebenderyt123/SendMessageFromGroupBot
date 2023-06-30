@@ -1,6 +1,9 @@
-import { createFileHistoryRequest } from "../api/history";
+import {
+  createFileHistoryRequest,
+  getFileHistoryStatsRequest,
+} from "../api/history";
 import Response from "../classes/Response";
-import FILE_HISTORY from "../models/history";
+import FILE_HISTORY, { FileHistoryStats } from "../models/history";
 import { getToken } from "../utils/auth";
 import { logger } from "../utils/logger";
 
@@ -26,4 +29,19 @@ async function createFileHistory(
   }
 }
 
-export { createFileHistory };
+async function getFileHistoryStats(): Promise<Response<FileHistoryStats>> {
+  const token = getToken();
+  try {
+    const response = await getFileHistoryStatsRequest(token);
+    if (response.status === 200) {
+      return new Response<FileHistoryStats>(response.data);
+    } else {
+      return new Response<FileHistoryStats>(null, response.data);
+    }
+  } catch (error: any) {
+    logger("Error", error);
+    return new Response<FileHistoryStats>(null, error);
+  }
+}
+
+export { createFileHistory, getFileHistoryStats };
