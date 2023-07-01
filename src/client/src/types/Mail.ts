@@ -18,5 +18,9 @@ type UpdateMailData = {
   isPaused?: boolean;
 };
 
+type UploadMailImageData = {
+  image: File;
+};
+
 export default MAIL;
-export { type UpdateMailData };
+export { type UpdateMailData, type UploadMailImageData };

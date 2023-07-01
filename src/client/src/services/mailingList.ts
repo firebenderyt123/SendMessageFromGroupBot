@@ -1,4 +1,9 @@
-import { getMailsListRequest, updateMailRequest } from "../api/malingList";
+import {
+  deleteMailImageRequest,
+  getMailsListRequest,
+  updateMailRequest,
+  uploadMailImageRequest,
+} from "../api/malingList";
 import { AppDispatch } from "../store";
 import {
   getMailsListFailed,
@@ -7,8 +12,14 @@ import {
   updateMailPending,
   updateMailSuccess,
   updateMailFailed,
+  uploadMailImagePending,
+  uploadMailImageSuccess,
+  uploadMailImageFailed,
+  deleteMailImagePending,
+  deleteMailImageSuccess,
+  deleteMailImageFailed,
 } from "../store/actions/mailingList";
-import { UpdateMailData } from "../types/Mail";
+import { UpdateMailData, UploadMailImageData } from "../types/Mail";
 
 const getMailsList = (token: string) => {
   return async (dispatch: AppDispatch) => {
@@ -43,4 +54,40 @@ const updateMail = (token: string, id: string, data: UpdateMailData) => {
   };
 };
 
-export { getMailsList, updateMail };
+const uploadMailImage = (
+  token: string,
+  id: string,
+  data: UploadMailImageData
+) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(uploadMailImagePending());
+      const response = await uploadMailImageRequest(token, id, data);
+      if (response.status === 200) {
+        dispatch(uploadMailImageSuccess(response.data));
+      } else {
+        dispatch(uploadMailImageFailed(response.data));
+      }
+    } catch (error: any) {
+      dispatch(uploadMailImageFailed(error));
+    }
+  };
+};
+
+const deleteMailImage = (token: string, id: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(deleteMailImagePending());
+      const response = await deleteMailImageRequest(token, id);
+      if (response.status === 200) {
+        dispatch(deleteMailImageSuccess(response.data));
+      } else {
+        dispatch(deleteMailImageFailed(response.data));
+      }
+    } catch (error: any) {
+      dispatch(deleteMailImageFailed(error));
+    }
+  };
+};
+
+export { getMailsList, updateMail, uploadMailImage, deleteMailImage };

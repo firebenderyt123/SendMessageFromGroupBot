@@ -10,7 +10,7 @@ import ImageUploader from "../ImageUploader";
 import Item from "../Item";
 import Input from "../../ui/Input";
 import TimePicker from "../../ui/TimePicker";
-import MAIL, { UpdateMailData } from "../../../types/Mail";
+import MAIL, { UpdateMailData, UploadMailImageData } from "../../../types/Mail";
 import { mailValid } from "../../../validation/mail";
 
 type FieldsData = {
@@ -24,10 +24,21 @@ type MailItemEditProps = {
   mail: MAIL;
   mailEditToggle: Function;
   onDataEdit: Function;
+  onImageUpload: Function;
+  onImageDelete: Function;
 };
 
-function MailItemEdit({ mail, mailEditToggle, onDataEdit }: MailItemEditProps) {
+function MailItemEdit({
+  mail,
+  mailEditToggle,
+  onDataEdit,
+  onImageUpload,
+  onImageDelete,
+}: MailItemEditProps) {
   const { id, name, image: imgSrc, content, sendAt, needToSend } = mail;
+
+  const [imageToUpload, setImageToUpload] = React.useState<File | null>(null);
+  const [isImageDelete, setIsImageDelete] = React.useState<boolean>(false);
 
   const {
     register,
@@ -49,14 +60,43 @@ function MailItemEdit({ mail, mailEditToggle, onDataEdit }: MailItemEditProps) {
       };
       mailEditToggle(id);
       onDataEdit(id, retData);
+      if (imageToUpload) {
+        console.log(imageToUpload);
+        const imgData: UploadMailImageData = {
+          image: imageToUpload,
+        };
+        onImageUpload(id, imgData);
+      } else if (isImageDelete) {
+        onImageDelete(id);
+      }
     },
-    [id, mailEditToggle, onDataEdit]
+    [
+      id,
+      imageToUpload,
+      isImageDelete,
+      mailEditToggle,
+      onDataEdit,
+      onImageDelete,
+      onImageUpload,
+    ]
   );
 
   const onCancel = React.useCallback(
     () => mailEditToggle(id),
     [id, mailEditToggle]
   );
+
+  const onImageUploadHandler = React.useCallback(
+    (image: File | null) => {
+      setImageToUpload(image);
+      setIsImageDelete(false);
+    },
+    [setImageToUpload]
+  );
+
+  const onImageDeleteHandler = React.useCallback((isDeleted: boolean) => {
+    setIsImageDelete(isDeleted);
+  }, []);
 
   const nameField = React.useMemo(
     () => (
@@ -131,8 +171,15 @@ function MailItemEdit({ mail, mailEditToggle, onDataEdit }: MailItemEditProps) {
   );
 
   const imageElem = React.useMemo(
-    () => <ImageUploader src={imgSrc} alt={name} />,
-    [imgSrc, name]
+    () => (
+      <ImageUploader
+        src={imgSrc}
+        alt={name}
+        onChange={onImageUploadHandler}
+        onDelete={onImageDeleteHandler}
+      />
+    ),
+    [imgSrc, name, onImageDeleteHandler, onImageUploadHandler]
   );
 
   const cancelBtn = React.useMemo(

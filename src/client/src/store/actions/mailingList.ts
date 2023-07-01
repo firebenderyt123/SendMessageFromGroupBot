@@ -14,6 +14,12 @@ import {
   DELETE_MAIL_PENDING,
   DELETE_MAIL_SUCCESS,
   DELETE_MAIL_FAILED,
+  UPLOAD_MAIL_IMAGE_PENDING,
+  UPLOAD_MAIL_IMAGE_FAILED,
+  DELETE_MAIL_IMAGE_PENDING,
+  UPLOAD_MAIL_IMAGE_SUCCESS,
+  DELETE_MAIL_IMAGE_SUCCESS,
+  DELETE_MAIL_IMAGE_FAILED,
 } from "../constants/mailingList";
 import MAIL from "../../types/Mail";
 import ERROR from "../../types/Error";
@@ -93,6 +99,36 @@ interface DeleteMailFailedAction {
   error: ERROR;
 }
 
+// Upload mail image
+interface UploadMailImagePendingAction {
+  type: typeof UPLOAD_MAIL_IMAGE_PENDING;
+}
+
+interface UploadMailImageSuccessAction {
+  type: typeof UPLOAD_MAIL_IMAGE_SUCCESS;
+  mail: MAIL;
+}
+
+interface UploadMailImageFailedAction {
+  type: typeof UPLOAD_MAIL_IMAGE_FAILED;
+  error: ERROR;
+}
+
+// Delete mail image
+interface DeleteMailImagePendingAction {
+  type: typeof DELETE_MAIL_IMAGE_PENDING;
+}
+
+interface DeleteMailImageSuccessAction {
+  type: typeof DELETE_MAIL_IMAGE_SUCCESS;
+  mail: MAIL;
+}
+
+interface DeleteMailImageFailedAction {
+  type: typeof DELETE_MAIL_IMAGE_FAILED;
+  error: ERROR;
+}
+
 type MailingListActions =
   | GetMailsListPendingAction
   | GetMailsListSuccessAction
@@ -108,7 +144,13 @@ type MailingListActions =
   | UpdateMailFailedAction
   | DeleteMailPendingAction
   | DeleteMailSuccessAction
-  | DeleteMailFailedAction;
+  | DeleteMailFailedAction
+  | UploadMailImagePendingAction
+  | UploadMailImageSuccessAction
+  | UploadMailImageFailedAction
+  | DeleteMailImagePendingAction
+  | DeleteMailImageSuccessAction
+  | DeleteMailImageFailedAction;
 
 // Get mails list
 const getMailsListPending = (): GetMailsListPendingAction => ({
@@ -185,6 +227,36 @@ const deleteMailFailed = (error: ERROR): DeleteMailFailedAction => ({
   error: error,
 });
 
+// Upload mail image
+const uploadMailImagePending = (): UploadMailImagePendingAction => ({
+  type: UPLOAD_MAIL_IMAGE_PENDING,
+});
+
+const uploadMailImageSuccess = (mail: MAIL): UploadMailImageSuccessAction => ({
+  type: UPLOAD_MAIL_IMAGE_SUCCESS,
+  mail: mail,
+});
+
+const uploadMailImageFailed = (error: ERROR): UploadMailImageFailedAction => ({
+  type: UPLOAD_MAIL_IMAGE_FAILED,
+  error: error,
+});
+
+// Delete mail image
+const deleteMailImagePending = (): DeleteMailImagePendingAction => ({
+  type: DELETE_MAIL_IMAGE_PENDING,
+});
+
+const deleteMailImageSuccess = (mail: MAIL): DeleteMailImageSuccessAction => ({
+  type: DELETE_MAIL_IMAGE_SUCCESS,
+  mail: mail,
+});
+
+const deleteMailImageFailed = (error: ERROR): DeleteMailImageFailedAction => ({
+  type: DELETE_MAIL_IMAGE_FAILED,
+  error: error,
+});
+
 export {
   type MailingListActions,
   getMailsListPending,
@@ -202,4 +274,10 @@ export {
   deleteMailPending,
   deleteMailSuccess,
   deleteMailFailed,
+  uploadMailImagePending,
+  uploadMailImageSuccess,
+  uploadMailImageFailed,
+  deleteMailImagePending,
+  deleteMailImageSuccess,
+  deleteMailImageFailed,
 };

@@ -4,13 +4,18 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import MailsList from "../../components/MailingList/MailsList";
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
-import { getMailsList, updateMail } from "../../services/mailingList";
+import {
+  deleteMailImage,
+  getMailsList,
+  updateMail,
+  uploadMailImage,
+} from "../../services/mailingList";
 import {
   selectError,
   selectIsLoading,
   selectMailsList,
 } from "../../store/selectors/mailingList";
-import { UpdateMailData } from "../../types/Mail";
+import { UpdateMailData, UploadMailImageData } from "../../types/Mail";
 
 function MailingListContainer() {
   const dispatch = useAppDispatch();
@@ -31,8 +36,27 @@ function MailingListContainer() {
     [dispatch]
   );
 
+  const handleImageUpload = React.useCallback(
+    (id: string, data: UploadMailImageData) => {
+      dispatch(uploadMailImage(token, id, data));
+    },
+    [dispatch]
+  );
+
+  const handleImageDelete = React.useCallback(
+    (id: string) => {
+      dispatch(deleteMailImage(token, id));
+    },
+    [dispatch]
+  );
+
   const mailListElem = !error && (
-    <MailsList mailsList={mailsList} onDataEdit={handleEditData} />
+    <MailsList
+      mailsList={mailsList}
+      onDataEdit={handleEditData}
+      onImageUpload={handleImageUpload}
+      onImageDelete={handleImageDelete}
+    />
   );
   const loadingElem = isLoading && (
     <Box

@@ -11,6 +11,12 @@ import {
   DELETE_MAIL_PENDING,
   DELETE_MAIL_SUCCESS,
   DELETE_MAIL_FAILED,
+  UPLOAD_MAIL_IMAGE_PENDING,
+  UPLOAD_MAIL_IMAGE_SUCCESS,
+  UPLOAD_MAIL_IMAGE_FAILED,
+  DELETE_MAIL_IMAGE_PENDING,
+  DELETE_MAIL_IMAGE_SUCCESS,
+  DELETE_MAIL_IMAGE_FAILED,
 } from "../constants/mailingList";
 import { MailingListActions } from "../actions/mailingList";
 import MAIL from "../../types/Mail";
@@ -130,6 +136,36 @@ export default function mailingListReducer(
       };
     }
     case DELETE_MAIL_FAILED: {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
+      };
+    }
+
+    // Upload/delete mail image
+    case UPLOAD_MAIL_IMAGE_PENDING || DELETE_MAIL_IMAGE_PENDING: {
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+    }
+    case UPLOAD_MAIL_IMAGE_SUCCESS || DELETE_MAIL_IMAGE_SUCCESS: {
+      return {
+        ...state,
+        mailsList: (() => {
+          const newMailsList: MAIL[] = [];
+          state.mailsList.forEach((item) => {
+            if (item.id !== action.mail.id) newMailsList.push(item);
+            else newMailsList.push(action.mail);
+          });
+          return newMailsList;
+        })(),
+        isLoading: false,
+      };
+    }
+    case UPLOAD_MAIL_IMAGE_FAILED || DELETE_MAIL_IMAGE_FAILED: {
       return {
         ...state,
         isLoading: false,

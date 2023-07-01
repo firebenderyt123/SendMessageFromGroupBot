@@ -8,9 +8,16 @@ import MailItemEdit from "../MailItemEdit";
 type MailsListProps = {
   mailsList: MAIL[];
   onDataEdit: Function;
+  onImageUpload: Function;
+  onImageDelete: Function;
 };
 
-function MailsList({ mailsList, onDataEdit }: MailsListProps) {
+function MailsList({
+  mailsList,
+  onDataEdit,
+  onImageUpload,
+  onImageDelete,
+}: MailsListProps) {
   const [itemIdEditing, setItemIdEditing] = React.useState<string | null>(null);
 
   const handleMailEditToggle = React.useCallback((id: string) => {
@@ -34,12 +41,21 @@ function MailsList({ mailsList, onDataEdit }: MailsListProps) {
               mail={item}
               mailEditToggle={handleMailEditToggle}
               onDataEdit={onDataEdit}
+              onImageUpload={onImageUpload}
+              onImageDelete={onImageDelete}
             />
           )
         )}
       </Stack>
     ),
-    [handleMailEditToggle, itemIdEditing, mailsList, onDataEdit]
+    [
+      handleMailEditToggle,
+      itemIdEditing,
+      mailsList,
+      onDataEdit,
+      onImageDelete,
+      onImageUpload,
+    ]
   );
 
   return <Box sx={{ width: "100%" }}>{mailsListElem}</Box>;
