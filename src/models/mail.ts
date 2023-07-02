@@ -36,9 +36,9 @@ const MailValid = {
         ? `Invalid name type, might be ${this.type}`
         : value.length < 2
         ? "Min name length is 2 chars."
-        : value.length > 18
-        ? "Max name length is 18 chars."
-        : /^[a-zа-яіїє]{2,18}$/i.test(value) || "Name might have only a-z, а-я";
+        : value.length > 25
+        ? "Max name length is 25 chars."
+        : true;
     },
   },
   content: {
@@ -47,8 +47,6 @@ const MailValid = {
     validate: function (value: string) {
       return typeof value !== this.type
         ? `Invalid content type, might be ${this.type}`
-        : value.length < 10
-        ? "Min content length is 10 chars."
         : value.length > 2048
         ? "Max content length is 2048 chars."
         : true;

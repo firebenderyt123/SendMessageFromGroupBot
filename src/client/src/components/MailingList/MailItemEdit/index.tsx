@@ -61,7 +61,6 @@ function MailItemEdit({
       mailEditToggle(id);
       onDataEdit(id, retData);
       if (imageToUpload) {
-        console.log(imageToUpload);
         const imgData: UploadMailImageData = {
           image: imageToUpload,
         };

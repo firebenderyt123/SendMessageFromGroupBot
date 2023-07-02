@@ -1,10 +1,14 @@
 import React from "react";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import MailsList from "../../components/MailingList/MailsList";
+import MailItemCreate from "../../components/MailingList/MailItemCreate";
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import {
+  createMail,
+  deleteMail,
   deleteMailImage,
   getMailsList,
   updateMail,
@@ -15,9 +19,15 @@ import {
   selectIsLoading,
   selectMailsList,
 } from "../../store/selectors/mailingList";
-import { UpdateMailData, UploadMailImageData } from "../../types/Mail";
+import {
+  CreateMailData,
+  UpdateMailData,
+  UploadMailImageData,
+} from "../../types/Mail";
 
 function MailingListContainer() {
+  const [showCreateFrom, setShowCreateForm] = React.useState<boolean>(false);
+
   const dispatch = useAppDispatch();
   const mailsList = useAppSelector(selectMailsList);
   const isLoading = useAppSelector(selectIsLoading);
@@ -50,13 +60,45 @@ function MailingListContainer() {
     [dispatch]
   );
 
+  const showCreateFormToggle = React.useCallback(() => {
+    setShowCreateForm((prev) => !prev);
+  }, []);
+
+  const handleCreateData = React.useCallback(
+    (data: CreateMailData) => {
+      dispatch(createMail(token, data));
+      showCreateFormToggle();
+    },
+    [dispatch, showCreateFormToggle]
+  );
+
+  const handleDeleteData = React.useCallback(
+    (id: string) => {
+      dispatch(deleteMail(token, id));
+    },
+    [dispatch]
+  );
+
   const mailListElem = !error && (
-    <MailsList
-      mailsList={mailsList}
-      onDataEdit={handleEditData}
-      onImageUpload={handleImageUpload}
-      onImageDelete={handleImageDelete}
-    />
+    <React.Fragment>
+      <Box display="flex" flexDirection="column">
+        <MailsList
+          mailsList={mailsList}
+          onDataEdit={handleEditData}
+          onDelete={handleDeleteData}
+          onImageUpload={handleImageUpload}
+          onImageDelete={handleImageDelete}
+        />
+        {showCreateFrom ? (
+          <MailItemCreate
+            onDataCreate={handleCreateData}
+            onCancel={showCreateFormToggle}
+          />
+        ) : (
+          <Button onClick={showCreateFormToggle}>Add</Button>
+        )}
+      </Box>
+    </React.Fragment>
   );
   const loadingElem = isLoading && (
     <Box

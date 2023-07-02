@@ -1,5 +1,6 @@
 import React from "react";
 import AutoFixHighRoundedIcon from "@mui/icons-material/AutoFixHighRounded";
+import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import PauseCircleRoundedIcon from "@mui/icons-material/PauseCircleRounded";
 import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import Chip from "@mui/material/Chip";
@@ -15,9 +16,15 @@ type MailItemProps = {
   mail: MAIL;
   mailEditToggle: Function;
   onDataEdit: Function;
+  onDelete: Function;
 };
 
-function MailItem({ mail, mailEditToggle, onDataEdit }: MailItemProps) {
+function MailItem({
+  mail,
+  mailEditToggle,
+  onDataEdit,
+  onDelete,
+}: MailItemProps) {
   const {
     id,
     name,
@@ -39,6 +46,10 @@ function MailItem({ mail, mailEditToggle, onDataEdit }: MailItemProps) {
   const handleMailEditOnClick = React.useCallback(() => {
     mailEditToggle(id);
   }, [id, mailEditToggle]);
+
+  const handleDeleteOnClick = React.useCallback(() => {
+    onDelete(id);
+  }, [id, onDelete]);
 
   const imageElem = React.useMemo(
     () =>
@@ -72,6 +83,17 @@ function MailItem({ mail, mailEditToggle, onDataEdit }: MailItemProps) {
       </Tooltip>
     ),
     [handleStopRunBtnOnClick, isPaused]
+  );
+
+  const deleteBtn = React.useMemo(
+    () => (
+      <Tooltip title="Delete" placement="top">
+        <IconButton color="error" onClick={handleDeleteOnClick}>
+          <DeleteForeverRoundedIcon />
+        </IconButton>
+      </Tooltip>
+    ),
+    [handleDeleteOnClick]
   );
 
   return (
@@ -113,6 +135,7 @@ function MailItem({ mail, mailEditToggle, onDataEdit }: MailItemProps) {
                   </IconButton>
                 </Tooltip>
               </Grid>
+              <Grid item>{deleteBtn}</Grid>
             </Grid>
           </Grid>
         </Grid>

@@ -8,6 +8,7 @@ import MailItemEdit from "../MailItemEdit";
 type MailsListProps = {
   mailsList: MAIL[];
   onDataEdit: Function;
+  onDelete: Function;
   onImageUpload: Function;
   onImageDelete: Function;
 };
@@ -15,6 +16,7 @@ type MailsListProps = {
 function MailsList({
   mailsList,
   onDataEdit,
+  onDelete,
   onImageUpload,
   onImageDelete,
 }: MailsListProps) {
@@ -34,6 +36,7 @@ function MailsList({
               mail={item}
               mailEditToggle={handleMailEditToggle}
               onDataEdit={onDataEdit}
+              onDelete={onDelete}
             />
           ) : (
             <MailItemEdit
@@ -53,6 +56,7 @@ function MailsList({
       itemIdEditing,
       mailsList,
       onDataEdit,
+      onDelete,
       onImageDelete,
       onImageUpload,
     ]

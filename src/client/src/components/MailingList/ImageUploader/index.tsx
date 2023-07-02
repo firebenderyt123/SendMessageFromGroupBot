@@ -62,7 +62,6 @@ function ImageUploader({
         <Tooltip title="Delete" placement="top">
           <IconButton
             color="error"
-            type="submit"
             onClick={onDeleteHandler}
             sx={{ zIndex: 2 }}>
             <ClearRoundedIcon />

@@ -9,6 +9,13 @@ type MAIL = {
   isPaused: boolean;
 };
 
+type CreateMailData = {
+  name: string;
+  content: string;
+  sendAt: string;
+  needToSend: number;
+};
+
 type UpdateMailData = {
   name?: string;
   content?: string;
@@ -23,4 +30,4 @@ type UploadMailImageData = {
 };
 
 export default MAIL;
-export { type UpdateMailData, type UploadMailImageData };
+export { type CreateMailData, type UpdateMailData, type UploadMailImageData };

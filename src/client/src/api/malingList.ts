@@ -1,10 +1,31 @@
 import axios, { AxiosResponse } from "axios";
 import { mailingUrl } from "../config/api";
-import { UpdateMailData, UploadMailImageData } from "../types/Mail";
+import {
+  CreateMailData,
+  UpdateMailData,
+  UploadMailImageData,
+} from "../types/Mail";
 
 const getMailsListRequest = async (token: string): Promise<AxiosResponse> => {
   try {
     const response = await axios.get(mailingUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error: any) {
+    if (error?.message) throw error;
+    return error?.response;
+  }
+};
+
+const createMailRequest = async (
+  token: string,
+  data: CreateMailData
+): Promise<AxiosResponse> => {
+  try {
+    const response = await axios.post(mailingUrl, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -23,6 +44,23 @@ const updateMailRequest = async (
 ): Promise<AxiosResponse> => {
   try {
     const response = await axios.put(mailingUrl + `/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error: any) {
+    if (error?.message) throw error;
+    return error?.response;
+  }
+};
+
+const deleteMailRequest = async (
+  token: string,
+  id: string
+): Promise<AxiosResponse> => {
+  try {
+    const response = await axios.delete(mailingUrl + `/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -72,7 +110,9 @@ const deleteMailImageRequest = async (
 
 export {
   getMailsListRequest,
+  createMailRequest,
   updateMailRequest,
+  deleteMailRequest,
   uploadMailImageRequest,
   deleteMailImageRequest,
 };

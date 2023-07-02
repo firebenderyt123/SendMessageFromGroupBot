@@ -1,5 +1,7 @@
 import {
+  createMailRequest,
   deleteMailImageRequest,
+  deleteMailRequest,
   getMailsListRequest,
   updateMailRequest,
   uploadMailImageRequest,
@@ -9,6 +11,9 @@ import {
   getMailsListFailed,
   getMailsListPending,
   getMailsListSuccess,
+  createMailPending,
+  createMailSuccess,
+  createMailFailed,
   updateMailPending,
   updateMailSuccess,
   updateMailFailed,
@@ -18,8 +23,15 @@ import {
   deleteMailImagePending,
   deleteMailImageSuccess,
   deleteMailImageFailed,
+  deleteMailPending,
+  deleteMailSuccess,
+  deleteMailFailed,
 } from "../store/actions/mailingList";
-import { UpdateMailData, UploadMailImageData } from "../types/Mail";
+import {
+  CreateMailData,
+  UpdateMailData,
+  UploadMailImageData,
+} from "../types/Mail";
 
 const getMailsList = (token: string) => {
   return async (dispatch: AppDispatch) => {
@@ -38,6 +50,22 @@ const getMailsList = (token: string) => {
   };
 };
 
+const createMail = (token: string, data: CreateMailData) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(createMailPending());
+      const response = await createMailRequest(token, data);
+      if (response.status === 200) {
+        dispatch(createMailSuccess(response.data));
+      } else {
+        dispatch(createMailFailed(response.data));
+      }
+    } catch (error: any) {
+      dispatch(createMailFailed(error));
+    }
+  };
+};
+
 const updateMail = (token: string, id: string, data: UpdateMailData) => {
   return async (dispatch: AppDispatch) => {
     try {
@@ -50,6 +78,22 @@ const updateMail = (token: string, id: string, data: UpdateMailData) => {
       }
     } catch (error: any) {
       dispatch(updateMailFailed(error));
+    }
+  };
+};
+
+const deleteMail = (token: string, id: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(deleteMailPending());
+      const response = await deleteMailRequest(token, id);
+      if (response.status === 200) {
+        dispatch(deleteMailSuccess(response.data));
+      } else {
+        dispatch(deleteMailFailed(response.data));
+      }
+    } catch (error: any) {
+      dispatch(deleteMailFailed(error));
     }
   };
 };
@@ -90,4 +134,11 @@ const deleteMailImage = (token: string, id: string) => {
   };
 };
 
-export { getMailsList, updateMail, uploadMailImage, deleteMailImage };
+export {
+  getMailsList,
+  createMail,
+  updateMail,
+  deleteMail,
+  uploadMailImage,
+  deleteMailImage,
+};

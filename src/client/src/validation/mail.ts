@@ -15,20 +15,11 @@ const mailValid: MailValid = {
       message: "Min name length is 2 chars",
     },
     maxLength: {
-      value: 18,
-      message: "Max name length is 18 chars",
-    },
-    pattern: {
-      value: /^[a-zа-яіїє]{2,18}$/i,
-      message: "Name might contains a-z, а-я",
+      value: 25,
+      message: "Max name length is 25 chars",
     },
   },
   content: {
-    required: "Field is required",
-    minLength: {
-      value: 10,
-      message: "Min content length is 10 chars.",
-    },
     maxLength: {
       value: 2048,
       message: "Max content length is 2048 chars",
