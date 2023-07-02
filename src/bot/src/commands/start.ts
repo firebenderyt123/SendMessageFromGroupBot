@@ -17,7 +17,7 @@ fs.readFile(dataFilePath, "utf8", (err: any, data: any) => {
 });
 
 async function start(ctx: StartContext): Promise<void> {
-  const { from, startPayload } = ctx;
+  const { telegram, from, startPayload } = ctx;
 
   if (!from) {
     logger("Error", "Message not sent! 'from' property is undefined");
@@ -32,7 +32,7 @@ async function start(ctx: StartContext): Promise<void> {
 
   // Message if no payload
   if (!startPayload) {
-    await sendMessage(ctx, `Welcome to the files bot.`);
+    await sendMessage(telegram, from.id, `Welcome to the files bot.`);
     return;
   }
 
@@ -40,18 +40,22 @@ async function start(ctx: StartContext): Promise<void> {
   if (startPayload.startsWith("post_")) {
     const postId = +startPayload.replace("post_", "");
     if (!postId) {
-      await sendMessage(ctx, `Invalid post id :(`);
+      await sendMessage(telegram, from.id, `Invalid post id :(`);
       return;
     }
 
     const fileIds: string[] = postData[postId] || [];
 
     if (!fileIds.length || fileIds[0] === "error") {
-      await sendMessage(ctx, `Post with No. ${postId} not found :(`);
+      await sendMessage(
+        telegram,
+        from.id,
+        `Post with No. ${postId} not found :(`
+      );
     } else {
       const numbericFileIds = fileIds.map((fileId: string) => +fileId);
       numbericFileIds.forEach(async (msgId) => {
-        await forwardMessage(ctx, msgId);
+        await forwardMessage(telegram, from.id, msgId);
       });
       await createFileHistory(postId, numbericFileIds);
     }

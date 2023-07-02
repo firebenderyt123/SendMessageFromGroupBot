@@ -1,12 +1,20 @@
 import { Context } from "telegraf";
 import { getFileHistoryStats } from "../services/history";
+import { logger } from "../utils/logger";
 import { sendMessage } from "../utils/messages";
 
 async function stats(ctx: Context): Promise<void> {
+  const { telegram, from } = ctx;
+
+  if (!from) {
+    logger("Error", "Message not sent! 'from' property is undefined");
+    return;
+  }
+
   const { data, error } = await getFileHistoryStats();
 
   if (error || !data?.daysAgo) {
-    await sendMessage(ctx, "Something went wrong!");
+    await sendMessage(telegram, from.id, "Something went wrong!");
     return;
   }
 
@@ -33,7 +41,7 @@ async function stats(ctx: Context): Promise<void> {
     `Half year: ${sixMonths.length} requests
     ` +
     `This year: ${year.length} requests`;
-  await sendMessage(ctx, statsMessage);
+  await sendMessage(telegram, from.id, statsMessage);
 }
 
 export { stats };

@@ -9,4 +9,9 @@ interface MAIL {
   isPaused: boolean;
 }
 
+type UpdateMailData = {
+  totalSended: number;
+};
+
 export default MAIL;
+export { type UpdateMailData };

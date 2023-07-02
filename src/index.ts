@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 initRoutes(app);
 
-app.use("/", express.static(join(__dirname, "./client/build")));
+app.use("/", express.static(join(__dirname, "../src/client/build")));
 
 app.use("/uploads", express.static(join(__dirname, "../uploads")));
 

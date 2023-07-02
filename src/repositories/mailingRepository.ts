@@ -1,7 +1,6 @@
 import { unlink } from "fs";
-import CustomError from "../classes/customError";
-import MAIL from "../models/mail";
 import { BaseRepository } from "./baseRepository";
+import MAIL from "../models/mail";
 
 class MailingRepository extends BaseRepository {
   constructor() {
