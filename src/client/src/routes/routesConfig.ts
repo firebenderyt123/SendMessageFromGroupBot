@@ -10,7 +10,7 @@ const routes = [
     path: "/",
     component: DashboardPage,
     exact: true,
-    isPrivate: true,
+    isPrivate: false,
   },
   {
     path: "/login",

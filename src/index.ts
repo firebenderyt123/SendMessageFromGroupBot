@@ -11,6 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 
 initRoutes(app);
 
+app.use("/", express.static(join(__dirname, "./client/build")));
+
 app.use("/uploads", express.static(join(__dirname, "../uploads")));
 
 const port = 8000;
