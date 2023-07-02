@@ -1,0 +1,1247 @@
+{
+  "version": 6,
+  "entities": [
+    {
+      "entity": {
+        "type": "Project",
+        "id": "aa16af62-4594-43d2-aebd-ce6c67bb3a96",
+        "name": "TelegramBot"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Service",
+            "description": "",
+            "id": "0d644c6e-a8a5-4715-9968-640e332f8a52",
+            "name": "History"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Scenario",
+                "description": "",
+                "id": "90ec2b51-b99c-43df-813e-cf0716279972",
+                "name": "History Test"
+              },
+              "children": [
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "requestBody": true,
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                      "name": "POST"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "multipart/form-data",
+                        "items": [
+                          {
+                            "enabled": true,
+                            "type": "Text",
+                            "name": "",
+                            "value": "Talend.getDate()"
+                          }
+                        ]
+                      },
+                      "bodyType": "Text",
+                      "textBody": "{\n  \"postId\": 1,\n  \"fileIds\": [10, 20]\n}"
+                    },
+                    "retryConfiguration": {
+                      "intervalInSeconds": 10,
+                      "retryCount": 1
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/history"
+                    },
+                    "id": "689937e6-4cdc-4ef3-8ff4-a9150e4de152",
+                    "name": "Create history file",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "assertions": []
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                      "name": "GET"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text",
+                      "textBody": "{\n  \"name\": \"Test\",\n  \"image\": \"123\"\n}"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/history"
+                    },
+                    "id": "913334e9-6693-4ba4-bf90-61f24383198b",
+                    "name": "Get history files",
+                    "headers": []
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                      "name": "GET"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text",
+                      "textBody": "{\n  \"name\": \"Test\",\n  \"image\": \"123\"\n}"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/history/${getEntityById(\"689937e6-4cdc-4ef3-8ff4-a9150e4de152\").\"response\".\"body\".\"id\"}"
+                    },
+                    "id": "68005b62-763e-4358-b972-e3a2b6d71051",
+                    "name": "Get history file",
+                    "headers": []
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                      "name": "DELETE"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/history/${getEntityById(\"689937e6-4cdc-4ef3-8ff4-a9150e4de152\").\"response\".\"body\".\"id\"}"
+                    },
+                    "id": "7763502c-f33c-4c3c-9939-5f0c7951ecdb",
+                    "name": "Delete history file",
+                    "headers": []
+                  }
+                }
+              ]
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "multipart/form-data",
+                    "items": [
+                      {
+                        "enabled": true,
+                        "type": "Text",
+                        "name": "",
+                        "value": "Talend.getDate()"
+                      }
+                    ]
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"postId\": 1,\n  \"fileIds\": [10, 20]\n}"
+                },
+                "retryConfiguration": {
+                  "intervalInSeconds": 10,
+                  "retryCount": 1
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/history"
+                },
+                "id": "b50477ce-e7dc-47bc-ae7c-cfe38d0359f5",
+                "name": "Create history file",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                  "name": "DELETE"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/history/15ac5c3a-123d-43e4-93bf-74eb116ca394"
+                },
+                "id": "e3aaa713-6dcf-40ac-beca-d3d4c5d29c48",
+                "name": "Delete history file",
+                "headers": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"name\": \"Test\",\n  \"image\": \"123\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/history/15ac5c3a-123d-43e4-93bf-74eb116ca394"
+                },
+                "id": "173d5bfc-8b42-4d6b-855d-8177a91a9cd8",
+                "name": "Get history file",
+                "headers": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"name\": \"Test\",\n  \"image\": \"123\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/history"
+                },
+                "id": "91050d15-ec3a-4ad9-8858-7eab5d840957",
+                "name": "Get history files",
+                "headers": []
+              }
+            }
+          ]
+        },
+        {
+          "entity": {
+            "type": "Service",
+            "id": "60c13677-385b-4c45-9ed2-3e9fc111fe96",
+            "name": "Mails"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Scenario",
+                "id": "228bc8b9-93e3-48d8-9849-bd5f26568f56",
+                "name": "Mails Test"
+              },
+              "children": [
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "requestBody": true,
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                      "name": "POST"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text",
+                      "textBody": "{\n  \"name\": \"Test\",\n  \"image\": \"123\",\n  \"sendAt\": \"00:00\" \n}"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/mailing"
+                    },
+                    "description": "",
+                    "id": "707485fc-a02c-4090-9e74-c0182f68d82b",
+                    "name": "Create mail",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "assertions": []
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                      "name": "GET"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/mailing"
+                    },
+                    "id": "a94e4824-edfb-4f18-989a-a1ac6375a91b",
+                    "name": "Get mails",
+                    "headers": []
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                      "name": "GET"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/mailing/${getEntityById(\"707485fc-a02c-4090-9e74-c0182f68d82b\").\"response\".\"body\".\"id\"}"
+                    },
+                    "id": "557c4aca-2c7c-4aa3-8dd7-cb801ed22cfe",
+                    "name": "Get mail",
+                    "headers": []
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "requestBody": true,
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                      "name": "PUT"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text",
+                      "textBody": "{\n  \"needToSend\": 100,\n  \"sendAt\": \"10:59\"\n}"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/mailing/${getEntityById(\"707485fc-a02c-4090-9e74-c0182f68d82b\").\"response\".\"body\".\"id\"}"
+                    },
+                    "id": "b07027ac-e5f5-4347-8a02-4a63e9a19250",
+                    "name": "Update mail",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "requestBody": true,
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                      "name": "POST"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "multipart/form-data",
+                        "items": [
+                          {
+                            "enabled": true,
+                            "type": "File",
+                            "name": "image"
+                          }
+                        ]
+                      },
+                      "bodyType": "Form"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/mailing/${getEntityById(\"707485fc-a02c-4090-9e74-c0182f68d82b\").\"response\".\"body\".\"id\"}/image"
+                    },
+                    "id": "06e1fdaa-2c5c-48b1-99ea-e3fc0e525a7f",
+                    "name": "Upload mail image",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Content-Type",
+                        "value": "multipart/form-data"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                      "name": "DELETE"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/mailing/${getEntityById(\"707485fc-a02c-4090-9e74-c0182f68d82b\").\"response\".\"body\".\"id\"}/image"
+                    },
+                    "id": "65b35fd0-5d1c-4e0a-b71a-e88204ed7055",
+                    "name": "Delete mail image",
+                    "headers": []
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                      "name": "DELETE"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/mailing/${getEntityById(\"707485fc-a02c-4090-9e74-c0182f68d82b\").\"response\".\"body\".\"id\"}"
+                    },
+                    "id": "2111e773-e0e6-4cb3-9278-f2a65fd770fe",
+                    "name": "Delete mail",
+                    "headers": []
+                  }
+                }
+              ]
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "multipart/form-data",
+                    "items": [
+                      {
+                        "enabled": true,
+                        "type": "Text",
+                        "name": "",
+                        "value": "Talend.getDate()"
+                      }
+                    ]
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"name\": \"SecondTest\",\n  \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <b>Adsd</b> <i>fdsffad</i>\",\n  \"sendAt\": \"14:55\"\n}"
+                },
+                "retryConfiguration": {
+                  "intervalInSeconds": 10,
+                  "retryCount": 1
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/mailing"
+                },
+                "id": "514a29ee-c91a-46ec-80fa-95e1cba411bd",
+                "name": "Create mail",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                  "name": "DELETE"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/mailing/9b5838ae-be1f-475d-a217-4faa24fef9e6"
+                },
+                "id": "5bb6073c-0c0f-4bd2-a36b-ce022478ff2b",
+                "name": "Delete mail",
+                "headers": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                  "name": "DELETE"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "multipart/form-data",
+                    "items": [
+                      {
+                        "enabled": true,
+                        "type": "File",
+                        "name": "image"
+                      }
+                    ]
+                  },
+                  "bodyType": "Form"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/mailing/49f3d5f8-66ab-49a9-8bf0-fd0b1b7cdfc4/image"
+                },
+                "id": "c10486a8-c663-4806-98fd-2d044f719113",
+                "name": "Delete mail image",
+                "headers": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"name\": \"Test\",\n  \"image\": \"123\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/mailing"
+                },
+                "id": "6ee7abd2-e206-4283-921f-9c157cabc2b9",
+                "name": "Get mails",
+                "headers": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                  "name": "PUT"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"sendAt\": \"10:59:23\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/mailing/${getEntityById(\"514a29ee-c91a-46ec-80fa-95e1cba411bd\").\"response\".\"body\".\"id\"}"
+                },
+                "id": "0707cf98-d509-4fc8-b76a-939bb517a039",
+                "name": "Update mail",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "multipart/form-data",
+                    "items": [
+                      {
+                        "enabled": true,
+                        "type": "File",
+                        "name": "image"
+                      }
+                    ]
+                  },
+                  "bodyType": "Form"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/mailing/49f3d5f8-66ab-49a9-8bf0-fd0b1b7cdfc4/image"
+                },
+                "id": "c6169e05-46b6-4af5-b888-beead338ad93",
+                "name": "Upload mail image",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "multipart/form-data"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "entity": {
+            "type": "Service",
+            "description": "",
+            "id": "47fa653a-2423-4c1d-82f8-1b22d02ab1a7",
+            "name": "Users"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Scenario",
+                "description": "",
+                "id": "983c77f8-eaab-4cb0-bc2e-d9ba352aae1e",
+                "name": "Users Test"
+              },
+              "children": [
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "requestBody": true,
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                      "name": "POST"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "multipart/form-data",
+                        "items": [
+                          {
+                            "enabled": true,
+                            "type": "Text",
+                            "name": "",
+                            "value": "Talend.getDate()"
+                          }
+                        ]
+                      },
+                      "bodyType": "Text",
+                      "textBody": "{\n  \"id\": 435375091,\n  \"firstName\": \"Firebender\"\n}"
+                    },
+                    "retryConfiguration": {
+                      "intervalInSeconds": 10,
+                      "retryCount": 1
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/users"
+                    },
+                    "id": "ce2b00b5-841f-42d2-ab92-026767ff1d73",
+                    "name": "Create user",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "assertions": []
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                      "name": "GET"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text",
+                      "textBody": "{\n  \"name\": \"Test\",\n  \"image\": \"123\"\n}"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/users"
+                    },
+                    "id": "eb869637-0a9d-4c86-a8b4-5a4686983970",
+                    "name": "Get users",
+                    "headers": []
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                      "name": "GET"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text",
+                      "textBody": "{\n  \"name\": \"Test\",\n  \"image\": \"123\"\n}"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/users/435375091"
+                    },
+                    "id": "3c428973-b360-44df-b498-37fbe26cc086",
+                    "name": "Get user",
+                    "headers": []
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "requestBody": true,
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                      "name": "PUT"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text",
+                      "textBody": "{\n  \"firstName\": \"Test\"\n}"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/users/435375091"
+                    },
+                    "id": "efbcaae9-9f05-4df5-ac71-56457407a73d",
+                    "name": "Update user",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                      "name": "DELETE"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "http",
+                        "version": "V11"
+                      },
+                      "host": "localhost:8000",
+                      "path": "/api/users/435375091"
+                    },
+                    "id": "013fab40-d01e-4488-9167-e10bc120e561",
+                    "name": "Delete user",
+                    "headers": []
+                  }
+                }
+              ]
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "multipart/form-data",
+                    "items": [
+                      {
+                        "enabled": true,
+                        "type": "Text",
+                        "name": "",
+                        "value": "Talend.getDate()"
+                      }
+                    ]
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"id\": 435375091,\n  \"firstName\": \"Firebender\"\n}"
+                },
+                "retryConfiguration": {
+                  "intervalInSeconds": 10,
+                  "retryCount": 1
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/users"
+                },
+                "id": "4831c90b-07a4-4272-aeee-fc7f566a0e05",
+                "name": "Create user",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                  "name": "DELETE"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/users/435375091"
+                },
+                "id": "a9175bc0-177c-4cbf-90a8-f0e517d67e24",
+                "name": "Delete user",
+                "headers": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"name\": \"Test\",\n  \"image\": \"123\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/users/435375091"
+                },
+                "id": "f708c2cf-427c-4e3d-baf0-114c258e8ba1",
+                "name": "Get user",
+                "headers": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"name\": \"Test\",\n  \"image\": \"123\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/users"
+                },
+                "id": "7c8537b6-5c38-4ac9-a0a4-1dd5a8dd1197",
+                "name": "Get users",
+                "headers": []
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                  "name": "PUT"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"firstName\": \"Test\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "localhost:8000",
+                  "path": "/api/users/435375091"
+                },
+                "id": "d4680c94-8314-4b63-b697-c3bdefb85bde",
+                "name": "Update user",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

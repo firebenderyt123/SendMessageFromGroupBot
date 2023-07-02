@@ -1,0 +1,8 @@
+{
+  "ignore": [
+    "src/bot/*",
+    "src/client/*",
+    "src/config/database.json",
+    "talendApi.json"
+  ]
+}
