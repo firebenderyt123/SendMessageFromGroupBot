@@ -1,4 +1,4 @@
-const rootUrl = "http://localhost:8000";
+const rootUrl = process.env.REACT_APP_SERVER_URL;
 const apiUrl = rootUrl + "/api";
 const mailingUrl = apiUrl + "/mailing";
 

@@ -15,9 +15,14 @@ app.use("/", express.static(join(__dirname, "../src/client/build")));
 
 app.use("/uploads", express.static(join(__dirname, "../uploads")));
 
+app.get("*", (req, res) => {
+  res.sendFile(join(__dirname, "../src/client/build", "index.html"));
+});
+
+const ip = "0.0.0.0";
 const port = 8000;
-app.listen(port, () => {
-  console.log(`Server started at: http://localhost:${port}`);
+app.listen(port, ip, () => {
+  console.log(`Server started at: http://${ip}:${port}`);
 });
 
 export { app };

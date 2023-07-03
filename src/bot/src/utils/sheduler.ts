@@ -9,8 +9,7 @@ import MAIL from "../models/mail";
 
 dotenv.config({ path: resolve(__dirname, "../../.env") });
 
-// const INTERVAL = 60 * 1000; // 1 minute
-const INTERVAL = 10 * 1000;
+const INTERVAL = 60 * 1000; // 1 minute
 const SERVER_URL = process.env.SERVER_URL;
 
 const startSchedule = (bot: Telegraf<Context<Update>>) => {

@@ -1,4 +1,11 @@
-const apiRoot = "http://localhost:8000/api";
+import dotenv from "dotenv";
+import { resolve } from "path";
+
+dotenv.config({ path: resolve(__dirname, "../../.env") });
+
+const SERVER_URL = process.env.SERVER_URL;
+
+const apiRoot = `${SERVER_URL}/api`;
 const historyUrl = apiRoot + "/history";
 const mailingUrl = apiRoot + "/mailing";
 const usersUrl = apiRoot + "/users";
