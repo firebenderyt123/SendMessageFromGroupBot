@@ -5,7 +5,7 @@ const dbPath = join(__dirname, "database.json");
 
 const db = new JsonDB(new Config(dbPath, true, false, "/"));
 
-const dbTables = ["/history/files", "/mails", "/users"];
+const dbTables = ["/history/files", "/users"];
 
 dbTables.forEach(async (table) => {
   if (!(await db.exists(table))) {
