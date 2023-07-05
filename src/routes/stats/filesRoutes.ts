@@ -1,14 +1,14 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { fileHistoryService } from "../services/historyService";
+import { fileHistoryService } from "../../services/historyService";
 import {
   responseMiddleware,
   errorMiddleware,
-} from "../middlewares/response.middleware";
+} from "../../middlewares/response.middleware";
 
 const router: Router = Router();
 
 router.get(
-  "/files",
+  "/",
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const stats = await fileHistoryService.stats();
