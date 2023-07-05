@@ -1,53 +1,33 @@
-import { Telegram } from "telegraf";
-import { InputFile, ParseMode } from "telegraf/typings/core/types/typegram";
-import { resolve } from "path";
-import dotenv from "dotenv";
+import { bot } from "../bot";
+import { ParseMode } from "telegraf/typings/core/types/typegram";
 import { logger } from "./logger";
 
-dotenv.config({ path: resolve(__dirname, "../.env") });
-const CHANNEL_ID = process.env.CHANNEL_ID as string;
-
 async function forwardMessage(
-  telegram: Telegram,
-  id: number | string,
+  chatId: number | string,
+  fromId: number | string,
   msgId: number
-): Promise<void> {
+): Promise<void | Error> {
   try {
-    await telegram.forwardMessage(id, CHANNEL_ID, msgId);
+    await bot.telegram.forwardMessage(chatId, fromId, msgId);
   } catch (error: any) {
     logger("Error", error);
-  }
-}
-
-async function sendImage(
-  telegram: Telegram,
-  id: number | string,
-  photo: string | InputFile,
-  extra?: {
-    caption?: string;
-    parse_mode?: ParseMode;
-  }
-): Promise<void> {
-  try {
-    await telegram.sendPhoto(id, photo, { ...extra });
-  } catch (error: any) {
-    console.error("Error:", error);
+    return error;
   }
 }
 
 async function sendMessage(
-  telegram: Telegram,
-  id: number | string,
+  chatId: number | string,
   message: string,
   extra?: {
     parse_mode?: ParseMode;
   }
-): Promise<void> {
+): Promise<void | Error> {
   try {
-    await telegram.sendMessage(id, message, { ...extra });
+    await bot.telegram.sendMessage(chatId, message, { ...extra });
   } catch (error: any) {
     logger("Error", error);
+    return error;
   }
 }
 
-export { forwardMessage, sendImage, sendMessage };
+export { forwardMessage, sendMessage };

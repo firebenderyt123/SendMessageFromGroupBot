@@ -19,7 +19,7 @@ async function getUsers(): Promise<Response<USER[]>> {
     }
   } catch (error: any) {
     logger("Error", error);
-    return new Response<USER[]>(null, error);
+    return new Response<USER[]>(null, "Something went wrong");
   }
 }
 
@@ -34,7 +34,7 @@ async function getUser(id: number): Promise<Response<USER>> {
     }
   } catch (error: any) {
     logger("Error", error);
-    return new Response<USER>(null, error);
+    return new Response<USER>(null, "Something went wrong");
   }
 }
 
@@ -56,7 +56,7 @@ async function createUser(
     }
   } catch (error: any) {
     logger("Error", error);
-    return new Response<USER>(null, error);
+    return new Response<USER>(null, "Something went wrong");
   }
 }
 
