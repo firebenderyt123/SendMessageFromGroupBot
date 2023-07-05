@@ -1,9 +1,4 @@
-import {
-  DashboardPage,
-  LoginPage,
-  MailingListPage,
-  NotFoundPage,
-} from "../pages";
+import { DashboardPage, LoginPage, NotFoundPage } from "../pages";
 
 const routes = [
   {
@@ -15,12 +10,6 @@ const routes = [
   {
     path: "/login",
     component: LoginPage,
-    exact: true,
-    isPrivate: false,
-  },
-  {
-    path: "/mailing",
-    component: MailingListPage,
     exact: true,
     isPrivate: false,
   },
