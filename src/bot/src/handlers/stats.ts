@@ -4,7 +4,7 @@ import { logger } from "../utils/logger";
 import { sendMessage } from "../utils/messages";
 
 async function stats(ctx: Context): Promise<void> {
-  const { telegram, from } = ctx;
+  const { from } = ctx;
 
   if (!from) {
     logger("Error", "Message not sent! 'from' property is undefined");
@@ -14,7 +14,7 @@ async function stats(ctx: Context): Promise<void> {
   const { data, error } = await getFileHistoryStats();
 
   if (error || !data?.daysAgo) {
-    await sendMessage(telegram, from.id, "Something went wrong!");
+    await sendMessage(from.id, "Something went wrong!");
     return;
   }
 
@@ -41,7 +41,7 @@ async function stats(ctx: Context): Promise<void> {
     `Half year: ${sixMonths.length} requests
     ` +
     `This year: ${year.length} requests`;
-  await sendMessage(telegram, from.id, statsMessage);
+  await sendMessage(from.id, statsMessage);
 }
 
 export { stats };

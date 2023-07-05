@@ -25,7 +25,7 @@ async function createFileHistory(
     }
   } catch (error: any) {
     logger("Error", error);
-    return new Response<FILE_HISTORY>(null, error);
+    return new Response<FILE_HISTORY>(null, "Something went wrong");
   }
 }
 
@@ -40,7 +40,7 @@ async function getFileHistoryStats(): Promise<Response<FileHistoryStats>> {
     }
   } catch (error: any) {
     logger("Error", error);
-    return new Response<FileHistoryStats>(null, error);
+    return new Response<FileHistoryStats>(null, "Something went wrong");
   }
 }
 

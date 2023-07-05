@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { defaultError, usersUrl } from "../config/api";
+import { usersUrl } from "../config/api";
 import { CreateUserData } from "../models/user";
 
 async function getUsersRequest(token: string): Promise<AxiosResponse> {
@@ -11,7 +11,7 @@ async function getUsersRequest(token: string): Promise<AxiosResponse> {
     });
     return response;
   } catch (error: any) {
-    return error?.response || defaultError;
+    throw error;
   }
 }
 
@@ -27,7 +27,7 @@ async function getUserRequest(
     });
     return response;
   } catch (error: any) {
-    return error?.response || defaultError;
+    throw error;
   }
 }
 
@@ -43,7 +43,7 @@ async function createUserRequest(
     });
     return response;
   } catch (error: any) {
-    return error?.response || defaultError;
+    throw error;
   }
 }
 

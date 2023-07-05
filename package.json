@@ -8,6 +8,7 @@
     "dev": "nodemon ./src/index.ts",
     "start": "node ./dist/index.js",
     "build": "tsc -p .",
+    "build-all": "npm run build && cd ./src/bot && npm run build && cd ../client && npm run build",
     "prod": "concurrently \"npm run bot\" \"npm run start\""
   },
   "author": "",

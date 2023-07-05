@@ -1,6 +1,6 @@
-// import { stats } from "../config";
 import fs from "fs";
 import path from "path";
+import { CHANNEL_ID } from "../config/env";
 import { StartContext } from "../contexts/StartContext";
 import { createFileHistory } from "../services/history";
 import { createUser, getUser } from "../services/users";
@@ -17,7 +17,7 @@ fs.readFile(dataFilePath, "utf8", (err: any, data: any) => {
 });
 
 async function start(ctx: StartContext): Promise<void> {
-  const { telegram, from, startPayload } = ctx;
+  const { from, startPayload } = ctx;
 
   if (!from) {
     logger("Error", "Message not sent! 'from' property is undefined");
@@ -32,7 +32,7 @@ async function start(ctx: StartContext): Promise<void> {
 
   // Message if no payload
   if (!startPayload) {
-    await sendMessage(telegram, from.id, `Welcome to the files bot.`);
+    await sendMessage(from.id, `Welcome to the files bot.`);
     return;
   }
 
@@ -40,22 +40,18 @@ async function start(ctx: StartContext): Promise<void> {
   if (startPayload.startsWith("post_")) {
     const postId = +startPayload.replace("post_", "");
     if (!postId) {
-      await sendMessage(telegram, from.id, `Invalid post id :(`);
+      await sendMessage(from.id, `Invalid post id :(`);
       return;
     }
 
     const fileIds: string[] = postData[postId] || [];
 
     if (!fileIds.length || fileIds[0] === "error") {
-      await sendMessage(
-        telegram,
-        from.id,
-        `Post with No. ${postId} not found :(`
-      );
+      await sendMessage(from.id, `Post with No. ${postId} not found :(`);
     } else {
       const numbericFileIds = fileIds.map((fileId: string) => +fileId);
       numbericFileIds.forEach(async (msgId) => {
-        await forwardMessage(telegram, from.id, msgId);
+        await forwardMessage(from.id, CHANNEL_ID, msgId);
       });
       await createFileHistory(postId, numbericFileIds);
     }
