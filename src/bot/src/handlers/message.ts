@@ -4,19 +4,21 @@ import { getUsers } from "../services/users";
 import { logger } from "../utils/logger";
 import { forwardMessage, sendMessage } from "../utils/messages";
 
-async function groupMessage(ctx: Context): Promise<void> {
-  const { message: msg, from } = ctx;
+async function channelMessage(ctx: Context): Promise<void> {
+  const { channelPost } = ctx;
 
-  if (!from) {
-    logger("Error", "Message not sent! 'from' property is undefined");
+  if (!channelPost) {
+    logger("Error", "Message not sent! It's not a channel");
     return;
   }
 
-  if (msg?.chat.id === MAILING_CHANNEL_ID) {
+  const { chat } = channelPost;
+
+  if (chat.id === MAILING_CHANNEL_ID) {
     const { data: usersData, error: usersError } = await getUsers();
 
     if (usersError || !usersData) {
-      await sendMessage(from.id, usersError as string);
+      await sendMessage(chat.id, usersError as string);
       return;
     }
 
@@ -27,7 +29,7 @@ async function groupMessage(ctx: Context): Promise<void> {
       const error = await forwardMessage(
         user.id,
         MAILING_CHANNEL_ID,
-        msg.message_id
+        channelPost.message_id
       );
       if (error) sendingErrors++;
       else sendingSuccess++;
@@ -35,12 +37,11 @@ async function groupMessage(ctx: Context): Promise<void> {
 
     // Admins notification
     const textForAdmins =
-      `Success quantity: ${sendingSuccess}\n` +
-      `Errors quantity: ${sendingErrors}`;
+      `Success: ${sendingSuccess}\n` + `Errors: ${sendingErrors}`;
     ADMIN_IDS.forEach(async (adminId) => {
       await sendMessage(adminId, textForAdmins);
     });
   }
 }
 
-export { groupMessage };
+export { channelMessage };

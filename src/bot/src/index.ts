@@ -1,7 +1,7 @@
 import LocalSession from "telegraf-session-local";
 import { resolve } from "path";
 import { bot } from "./bot";
-import { groupMessage, start, stats } from "./handlers";
+import { channelMessage, start, stats } from "./handlers";
 
 bot.use(
   new LocalSession({
@@ -11,7 +11,7 @@ bot.use(
 
 bot.start(async (ctx) => await start(ctx));
 bot.command("stats", async (ctx) => await stats(ctx));
-bot.on("message", async (ctx) => await groupMessage(ctx));
+bot.on("channel_post", async (ctx) => await channelMessage(ctx));
 
 // bot started info
 bot.telegram.getMe().then((botInfo) => {
